@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.req
+package bingsoochef.bingsoochef.toppping.presentation.req
 
 data class RegisterCommentRequest(
     val toppingId: Long,

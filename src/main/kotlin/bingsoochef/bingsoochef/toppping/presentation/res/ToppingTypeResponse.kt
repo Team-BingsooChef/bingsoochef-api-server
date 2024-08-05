@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.res
+package bingsoochef.bingsoochef.toppping.presentation.res
 
 import bingsoochef.bingsoochef.toppping.domain.ToppingType
 

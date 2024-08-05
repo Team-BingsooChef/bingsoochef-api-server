@@ -1,6 +1,6 @@
-package bingsoochef.bingsoochef.toppping;
+package bingsoochef.bingsoochef.toppping.presentation;
 
-import bingsoochef.bingsoochef.toppping.res.ToppingTypeResponse
+import bingsoochef.bingsoochef.toppping.presentation.res.ToppingTypeResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping

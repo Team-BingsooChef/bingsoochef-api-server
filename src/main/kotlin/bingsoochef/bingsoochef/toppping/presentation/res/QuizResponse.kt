@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.res
+package bingsoochef.bingsoochef.toppping.presentation.res
 
 data class QuizResponse(
     val quiz: QuizDto,

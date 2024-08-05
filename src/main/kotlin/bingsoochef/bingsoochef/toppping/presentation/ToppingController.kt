@@ -1,11 +1,11 @@
-package bingsoochef.bingsoochef.toppping
+package bingsoochef.bingsoochef.toppping.presentation
 
-import bingsoochef.bingsoochef.toppping.req.CreateToppingRequest
-import bingsoochef.bingsoochef.toppping.req.RegisterCommentRequest
-import bingsoochef.bingsoochef.toppping.req.TryQuizRequest
-import bingsoochef.bingsoochef.toppping.res.QuizResponse
-import bingsoochef.bingsoochef.toppping.res.ToppingResponse
-import bingsoochef.bingsoochef.toppping.res.TryResultResponse
+import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
+import bingsoochef.bingsoochef.toppping.presentation.req.RegisterCommentRequest
+import bingsoochef.bingsoochef.toppping.presentation.req.TryQuizRequest
+import bingsoochef.bingsoochef.toppping.presentation.res.QuizResponse
+import bingsoochef.bingsoochef.toppping.presentation.res.ToppingResponse
+import bingsoochef.bingsoochef.toppping.presentation.res.TryResultResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 

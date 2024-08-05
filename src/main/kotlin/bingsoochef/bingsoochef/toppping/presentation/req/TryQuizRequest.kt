@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.req
+package bingsoochef.bingsoochef.toppping.presentation.req
 
 data class TryQuizRequest(
     val toppingId: Long,
