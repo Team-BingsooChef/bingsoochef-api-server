@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.toppping
 
 import bingsoochef.bingsoochef.toppping.req.CreateToppingRequest
+import bingsoochef.bingsoochef.toppping.req.RegisterCommentRequest
 import bingsoochef.bingsoochef.toppping.req.TryQuizRequest
 import bingsoochef.bingsoochef.toppping.res.QuizResponse
 import bingsoochef.bingsoochef.toppping.res.ToppingResponse
@@ -29,6 +30,11 @@ class ToppingController {
 
     @PostMapping("/quiz")
     fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
+        TODO()
+    }
+
+    @PostMapping("/comments")
+    fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
         TODO()
     }
 }
