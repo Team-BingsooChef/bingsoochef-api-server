@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.toppping
 
 import bingsoochef.bingsoochef.toppping.req.CreateToppingRequest
+import bingsoochef.bingsoochef.toppping.res.QuizResponse
 import bingsoochef.bingsoochef.toppping.res.ToppingResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -16,6 +17,11 @@ class ToppingController {
 
     @GetMapping("/{topping_id}")
     fun getTopping(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<ToppingResponse> {
+        TODO()
+    }
+
+    @GetMapping("/{topping_id}/quiz")
+    fun getQuiz(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<QuizResponse> {
         TODO()
     }
 }
