@@ -1,0 +1,16 @@
+package bingsoochef.bingsoochef.bingsoo.presentation
+
+import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
+import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooResponse
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
+@RestController()
+@RequestMapping("/users/bingsoo")
+class BingsooController {
+
+    @PostMapping
+    fun createBingsoo(@RequestBody request: CreateBingsooRequest): ResponseEntity<BingsooResponse> {
+        TODO()
+    }
+}
