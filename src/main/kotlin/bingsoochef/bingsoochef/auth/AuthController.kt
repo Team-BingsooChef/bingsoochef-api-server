@@ -2,6 +2,7 @@ package bingsoochef.bingsoochef.auth
 
 import bingsoochef.bingsoochef.presentation.req.LoginRequest
 import bingsoochef.bingsoochef.presentation.res.LoginResponse
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -21,21 +22,21 @@ class AuthController : AuthControllerInterface {
 
     @GetMapping("/oauth/kakao")
     override fun kakaoOauth(): ResponseEntity<Void> {
-        return ResponseEntity.status(303)
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
             .header("Location", "")
             .build()
     }
 
     @GetMapping("/oauth/google")
     override fun googleOauth(): ResponseEntity<Void> {
-        return ResponseEntity.status(303)
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
             .header("Location", "")
             .build()
     }
 
     @GetMapping("/oauth/naver")
     override fun naverOauth(): ResponseEntity<Void> {
-        return ResponseEntity.status(303)
+        return ResponseEntity.status(HttpStatus.SEE_OTHER)
             .header("Location", "")
             .build()
     }
