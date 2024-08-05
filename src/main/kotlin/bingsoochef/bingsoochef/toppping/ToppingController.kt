@@ -13,4 +13,9 @@ class ToppingController {
     fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
         TODO()
     }
+
+    @GetMapping("/{topping_id}")
+    fun getTopping(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<ToppingResponse> {
+        TODO()
+    }
 }
