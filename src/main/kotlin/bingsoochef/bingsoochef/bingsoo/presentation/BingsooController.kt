@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.bingsoo.presentation
 
 import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
+import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDetailResponse
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooResponse
 import org.springframework.http.ResponseEntity
@@ -17,6 +18,11 @@ class BingsooController {
 
     @GetMapping("/{bingsoo_id}")
     fun getBingsoo(@PathVariable(value = "bingsoo_id") bingsooId: Long): ResponseEntity<BingsooDetailResponse> {
+        TODO()
+    }
+
+    @PatchMapping()
+    fun updateBingsoo(@RequestBody request: UpdateBingsooRequest): ResponseEntity<BingsooResponse> {
         TODO()
     }
 }
