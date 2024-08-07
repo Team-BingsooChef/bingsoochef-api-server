@@ -37,8 +37,8 @@ dependencies {
 	implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
 	// security
-	implementation("org.springframework.boot:spring-boot-starter-security")
-	testImplementation("org.springframework.security:spring-security-test")
+//	implementation("org.springframework.boot:spring-boot-starter-security")
+//	testImplementation("org.springframework.security:spring-security-test")
 
 	// database
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -48,6 +48,9 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+
+	// swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 }
 
 kotlin {
