@@ -50,7 +50,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	// swagger
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
 }
 
 kotlin {
