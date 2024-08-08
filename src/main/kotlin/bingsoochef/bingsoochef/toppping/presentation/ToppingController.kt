@@ -45,7 +45,7 @@ class ToppingController {
                 "is hidden이 true일 땐 성공 응답에도 topping의 정보가 반환되지 않습니다.<br>"
     )
     @ApiResponses(value = [
-        ApiResponse(responseCode = "201", description = "조회한 토핑 반환",
+        ApiResponse(responseCode = "200", description = "조회한 토핑 반환",
             content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingResponse::class))))]),
         ApiResponse(responseCode = "401", description = "토핑에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
         ApiResponse(responseCode = "404", description = "존재하지 않는 토핑임", content = [Content()])
