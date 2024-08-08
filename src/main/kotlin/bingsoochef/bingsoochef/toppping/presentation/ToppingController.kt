@@ -6,9 +6,11 @@ import bingsoochef.bingsoochef.toppping.presentation.req.TryQuizRequest
 import bingsoochef.bingsoochef.toppping.presentation.res.QuizResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.ToppingResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.TryResultResponse
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
+@Tag(name = "Topping", description = "토핑 API")
 @RestController()
 @RequestMapping("/users/bingsoos/toppings")
 class ToppingController {
