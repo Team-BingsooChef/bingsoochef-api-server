@@ -55,6 +55,18 @@ class ToppingController {
         TODO()
     }
 
+
+    @Operation(
+        summary = "퀴즈 조회 API",
+        description = "topping id를 가진 토핑의 퀴즈를 조회합니다.<br>" +
+                "access token의 user id가 chef id나 topping이 속한 bingsoo의 customer id와 동일한 경우에만 퀴즈에 접근할 수 있습니다."
+    )
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", description = "조회한 퀴즈 반환",
+            content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = QuizResponse::class))))]),
+        ApiResponse(responseCode = "401", description = "토핑에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "존재하지 않는 토핑임", content = [Content()])
+    ])
     @GetMapping("/{topping_id}/quiz")
     fun getQuiz(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<QuizResponse> {
         TODO()
