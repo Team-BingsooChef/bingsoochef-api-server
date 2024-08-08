@@ -76,7 +76,8 @@ class ToppingController {
     @Operation(
         summary = "퀴즈 정답 제출 API",
         description = "quiz id를 가진 퀴즈에 정답을 제출합니다.<br>" +
-                "access token의 user id가 toppping에 대한 chef id나 customer id와 동일한 경우에만 제출을 시도할 수 있습니다."
+                "access token의 user id가 toppping에 대한 chef id나 customer id와 동일한 경우에만 제출을 시도할 수 있습니다." +
+                "토핑에 퀴즈가 없거나, 이미 해결한 퀴즈인 경우 실패로 응답합니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "정답 제출 결과 반환",
