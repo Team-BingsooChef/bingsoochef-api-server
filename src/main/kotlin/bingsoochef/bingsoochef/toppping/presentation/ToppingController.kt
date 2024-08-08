@@ -90,6 +90,20 @@ class ToppingController {
         TODO()
     }
 
+    @Operation(
+        summary = "코멘트 등록 API",
+        description = "topping id를 가진 토핑에 comment를 등록합니다.<br>" +
+                "access token의 user id가 toppping에 대한 chef id나 customer id와 동일한 경우에만 comment를 등록할 수 있습니다.<br>" +
+                "access token의 user id가 customer id와 동일한 경우, topping의 is hiden이 false일 때만 comment를 등록할 수 있으며 " +
+                "is hidden이 true일 땐 성공 응답에도 comment가 등록되지 않습니다."
+    )
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "201", description = "생성된 코멘트를 포함한 토핑 반환",
+            content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingResponse::class))))]),
+        ApiResponse(responseCode = "400", description = "이미 코멘트가 등록된 토핑", content = [Content()]),
+        ApiResponse(responseCode = "401", description = "토핑에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "존재하지 않는 토핑", content = [Content()])
+    ])
     @PostMapping("/comments")
     fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
         TODO()
