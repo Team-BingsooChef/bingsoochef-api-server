@@ -37,6 +37,19 @@ class ToppingController {
         TODO()
     }
 
+    @Operation(
+        summary = "토핑 조회 API",
+        description = "topping id를 가진 토핑을 조회합니다.<br>" +
+                "access token의 user id가 chef id나 topping이 속한 bingsoo의 customer id와 동일한 경우에만 토핑에 접근할 수 있습니다.<br>" +
+                "access token의 user id가 customer id와 동일한 경우, topping의 is hiden이 false일 때만 토핑을 조회할 수 있으며 " +
+                "is hidden이 true일 땐 성공 응답에도 topping의 정보가 반환되지 않습니다.<br>"
+    )
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "201", description = "조회한 토핑 반환",
+            content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingResponse::class))))]),
+        ApiResponse(responseCode = "401", description = "토핑에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "존재하지 않는 토핑임", content = [Content()])
+    ])
     @GetMapping("/{topping_id}")
     fun getTopping(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<ToppingResponse> {
         TODO()
