@@ -72,6 +72,17 @@ class ToppingController {
         TODO()
     }
 
+    @Operation(
+        summary = "퀴즈 정답 제출 API",
+        description = "quiz id를 가진 퀴즈에 정답을 제출합니다.<br>" +
+                "access token의 user id가 toppping에 대한 chef id나 customer id와 동일한 경우에만 제출을 시도할 수 있습니다."
+    )
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", description = "정답 제출 결과 반환",
+            content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = TryResultResponse::class))))]),
+        ApiResponse(responseCode = "401", description = "퀴즈에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "존재하지 않거나 이미 해결한 퀴즈", content = [Content()])
+    ])
     @PostMapping("/quiz")
     fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
         TODO()
