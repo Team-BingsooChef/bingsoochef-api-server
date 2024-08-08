@@ -83,7 +83,7 @@ class ToppingController {
         ApiResponse(responseCode = "200", description = "정답 제출 결과 반환",
             content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = TryResultResponse::class))))]),
         ApiResponse(responseCode = "401", description = "퀴즈에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "존재하지 않거나 이미 해결한 퀴즈", content = [Content()])
+        ApiResponse(responseCode = "404", description = "존재하지 않거나 이미 해결한 퀴즈 / 존재하지 않는 옵션", content = [Content()])
     ])
     @PostMapping("/quiz")
     fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
