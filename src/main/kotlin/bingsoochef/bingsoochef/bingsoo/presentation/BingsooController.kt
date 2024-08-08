@@ -16,8 +16,8 @@ class BingsooController : BingsooSwaggerInterface {
         TODO()
     }
 
-    @GetMapping("/{bingsoo_id}")
-    override fun getBingsoo(@PathVariable(value = "bingsoo_id") bingsooId: Long): ResponseEntity<BingsooDetailResponse> {
+    @GetMapping("/{bingsoo-id}")
+    override fun getBingsoo(@PathVariable(value = "bingsoo-id") bingsooId: Long): ResponseEntity<BingsooDetailResponse> {
         TODO()
     }
 

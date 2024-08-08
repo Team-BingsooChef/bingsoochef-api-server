@@ -18,13 +18,13 @@ class ToppingController : ToppingSwaggerInterface {
         TODO()
     }
 
-    @GetMapping("/{topping_id}")
-    override fun getTopping(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<ToppingResponse> {
+    @GetMapping("/{topping-id}")
+    override fun getTopping(@PathVariable(value = "topping-id") toppingId: Long): ResponseEntity<ToppingResponse> {
         TODO()
     }
 
-    @GetMapping("/{topping_id}/quiz")
-    override fun getQuiz(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<QuizResponse> {
+    @GetMapping("/{topping-id}/quiz")
+    override fun getQuiz(@PathVariable(value = "topping-id") toppingId: Long): ResponseEntity<QuizResponse> {
         TODO()
     }
 

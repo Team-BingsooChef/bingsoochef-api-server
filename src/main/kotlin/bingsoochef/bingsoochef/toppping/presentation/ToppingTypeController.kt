@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController()
-@RequestMapping("/topping_types")
+@RequestMapping("/topping-types")
 class ToppingTypeController : ToppingTypeSwaggerInterface {
 
     @GetMapping()
