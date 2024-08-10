@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.ResponseEntity
 
 @Tag(name = "Topping Type", description = "토핑 종류에 대한 API")
-interface ToppingTypeSwaggerInterface {
+interface ToppingTypeControllerInterface {
 
     @Operation(
         summary = "토핑 종류 조회 API",

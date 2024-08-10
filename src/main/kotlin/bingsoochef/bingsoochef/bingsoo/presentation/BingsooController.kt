@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController()
 @RequestMapping("/users/bingsoo")
-class BingsooController : BingsooSwaggerInterface {
+class BingsooController : BingsooControllerInterface {
 
     @PostMapping
     override fun createBingsoo(@RequestBody request: CreateBingsooRequest): ResponseEntity<BingsooResponse> {

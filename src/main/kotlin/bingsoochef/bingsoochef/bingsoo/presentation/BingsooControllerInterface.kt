@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 
 @Tag(name = "Bingsoo", description = "빙수 API")
-interface BingsooSwaggerInterface {
+interface BingsooControllerInterface {
 
     @Operation(
         summary = "빙수 생성 API",

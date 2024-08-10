@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
 
 @Tag(name = "Topping", description = "토핑 API")
-interface ToppingSwaggerInterface {
+interface ToppingControllerInterface {
 
     @Operation(
         summary = "토핑 생성 API",

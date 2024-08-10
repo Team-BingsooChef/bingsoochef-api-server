@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController()
 @RequestMapping("/topping-types")
-class ToppingTypeController : ToppingTypeSwaggerInterface {
+class ToppingTypeController : ToppingTypeControllerInterface {
 
     @GetMapping()
     override fun getToppingTypes(): ResponseEntity<ToppingTypeResponse> {

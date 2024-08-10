@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController()
 @RequestMapping("/users/bingsoos/toppings")
-class ToppingController : ToppingSwaggerInterface {
+class ToppingController : ToppingControllerInterface {
 
     @PostMapping
     override fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
