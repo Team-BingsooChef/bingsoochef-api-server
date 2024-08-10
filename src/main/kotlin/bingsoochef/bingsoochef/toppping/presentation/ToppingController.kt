@@ -11,30 +11,30 @@ import org.springframework.web.bind.annotation.*
 
 @RestController()
 @RequestMapping("/users/bingsoos/toppings")
-class ToppingController {
+class ToppingController : ToppingControllerInterface {
 
     @PostMapping
-    fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
+    override fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
         TODO()
     }
 
-    @GetMapping("/{topping_id}")
-    fun getTopping(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<ToppingResponse> {
+    @GetMapping("/{topping-id}")
+    override fun getTopping(@PathVariable(value = "topping-id") toppingId: Long): ResponseEntity<ToppingResponse> {
         TODO()
     }
 
-    @GetMapping("/{topping_id}/quiz")
-    fun getQuiz(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<QuizResponse> {
+    @GetMapping("/{topping-id}/quiz")
+    override fun getQuiz(@PathVariable(value = "topping-id") toppingId: Long): ResponseEntity<QuizResponse> {
         TODO()
     }
 
     @PostMapping("/quiz")
-    fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
+    override fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
         TODO()
     }
 
     @PostMapping("/comments")
-    fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
+    override fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
         TODO()
     }
 }

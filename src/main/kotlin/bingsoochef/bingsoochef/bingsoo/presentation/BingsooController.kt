@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.*
 
 @RestController()
 @RequestMapping("/users/bingsoo")
-class BingsooController {
+class BingsooController : BingsooControllerInterface {
 
     @PostMapping
-    fun createBingsoo(@RequestBody request: CreateBingsooRequest): ResponseEntity<BingsooResponse> {
+    override fun createBingsoo(@RequestBody request: CreateBingsooRequest): ResponseEntity<BingsooResponse> {
         TODO()
     }
 
-    @GetMapping("/{bingsoo_id}")
-    fun getBingsoo(@PathVariable(value = "bingsoo_id") bingsooId: Long): ResponseEntity<BingsooDetailResponse> {
+    @GetMapping("/{bingsoo-id}")
+    override fun getBingsoo(@PathVariable(value = "bingsoo-id") bingsooId: Long): ResponseEntity<BingsooDetailResponse> {
         TODO()
     }
 
     @PatchMapping()
-    fun updateBingsoo(@RequestBody request: UpdateBingsooRequest): ResponseEntity<BingsooResponse> {
+    override fun updateBingsoo(@RequestBody request: UpdateBingsooRequest): ResponseEntity<BingsooResponse> {
         TODO()
     }
 }

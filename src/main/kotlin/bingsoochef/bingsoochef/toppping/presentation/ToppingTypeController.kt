@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-
 @RestController()
-@RequestMapping("/topping_types")
-class ToppingTypeController {
+@RequestMapping("/topping-types")
+class ToppingTypeController : ToppingTypeControllerInterface {
 
     @GetMapping()
-    fun getToppingTypes(): ResponseEntity<ToppingTypeResponse> {
+    override fun getToppingTypes(): ResponseEntity<ToppingTypeResponse> {
         TODO()
     }
 }
