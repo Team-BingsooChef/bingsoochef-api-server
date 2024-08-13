@@ -5,9 +5,9 @@ import jakarta.persistence.*
 @Table(name = "bingsoo")
 @Entity
 class Bingsoo(
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var bingsooId: Long? = null,
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bingsoo_id")
+    var id: Long? = null,
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -17,11 +17,11 @@ class Bingsoo(
         if (other !is Bingsoo) return false
         if (this === other) return true
 
-        if (bingsooId == null || other.bingsooId == null) return false
-        return bingsooId == other.bingsooId
+        if (id == null || other.id == null) return false
+        return id == other.id
     }
 
     override fun hashCode(): Int {
-        return bingsooId?.hashCode() ?: 0
+        return id?.hashCode() ?: 0
     }
 }
