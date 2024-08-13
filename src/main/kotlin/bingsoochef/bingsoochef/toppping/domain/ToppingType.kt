@@ -9,6 +9,8 @@ class ToppingType(
     @Column(name = "topping_type_id")
     val id: Long,
 
-    val toppingName: String,
-    val toppingImg: String
+    @Column(name = "topping_type_name")
+    val name: String,
+    @Column(name = "topping_type_img")
+    val img: String
 )
