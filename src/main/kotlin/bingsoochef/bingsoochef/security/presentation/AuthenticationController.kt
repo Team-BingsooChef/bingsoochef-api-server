@@ -26,7 +26,7 @@ class AuthenticationController(
         @RequestBody request: EmailRequest,
         @RequestParam code: String
     ): ResponseEntity<Void> {
-
+        authenticationService.verifyEmailCode(request.email, code)
         return ResponseEntity.ok()
             .build()
     }
