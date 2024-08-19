@@ -52,7 +52,10 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	runtimeOnly("com.mysql:mysql-connector-j")
 
-	// test
+    //redis
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
+    // test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -61,6 +64,11 @@ dependencies {
 	testImplementation("io.kotest:kotest-property-jvm:5.9.1")
 	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.3.0")
 	testImplementation("io.mockk:mockk:1.13.12")
+
+    // test
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	// swagger
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
