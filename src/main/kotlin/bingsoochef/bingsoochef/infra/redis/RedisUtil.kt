@@ -47,4 +47,8 @@ class RedisUtil(
         return EMAIL_CERTIFICATION_PREFIX + email
     }
 
+    fun getEmailCertificationSuccessKey(email: String): String {
+        return EMAIL_CERTIFICATION_SUCCESS_PREFIX + email
+    }
+
 }
