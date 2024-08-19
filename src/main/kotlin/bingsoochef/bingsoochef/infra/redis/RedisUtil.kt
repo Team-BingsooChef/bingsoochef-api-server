@@ -10,6 +10,10 @@ class RedisUtil(
     private val redisTemplate: RedisTemplate<String, String>,
     private val objectMapper: ObjectMapper
 ) {
+    companion object {
+        const val EMAIL_CERTIFICATION_PREFIX = "email_certification:"
+        const val EMAIL_CERTIFICATION_SUCCESS_PREFIX = "email_certification_success:"
+    }
 
     fun <T> setData(key: String, data: T, timeout: Long, timeUnit: TimeUnit): Boolean {
         try {
@@ -38,4 +42,9 @@ class RedisUtil(
             false
         }
     }
+
+    fun getEmailCertificationKey(email: String): String {
+        return EMAIL_CERTIFICATION_PREFIX + email
+    }
+
 }
