@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring6.SpringTemplateEngine
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 @Service
@@ -19,7 +20,7 @@ class AuthenticationService(
     private val templateEngine: SpringTemplateEngine
 ) {
     companion object {
-        private const val EMAIL_EXPIRE_TIME = 5L
+        private const val EMAIL_CERTIFICATION_EXPIRE_TIME = 5L
         private const val EMAIL_CERTIFICATION_SUCCESS_EXPIRE_MINUTE = 10L
     }
 
@@ -42,6 +43,15 @@ class AuthenticationService(
         saveSecretCode(email, certificationNumber)
     }
 
+    fun verifyEmailCode(email: String, requestCode: String) {
+        val code = getSecretCode(email)
+        deleteSecretCode(email)
+        if (isWrongCode(code, requestCode)) {
+            throw BingsooException(AuthError.EMAIL_CERTIFICATION_FAILED)
+        }
+        saveSuccessCertification(email)
+    }
+
     private fun createHtmlContent(certificationNumber: String): String {
         val context = Context()
         context.setVariable("certificationNumber", certificationNumber)
@@ -50,6 +60,27 @@ class AuthenticationService(
 
     private fun saveSecretCode(email: String, secretCode: String) {
         val key = redisUtil.getEmailCertificationKey(email)
-        redisUtil.setData(key, secretCode, EMAIL_EXPIRE_TIME, TimeUnit.MINUTES)
+        redisUtil.setData(key, secretCode, EMAIL_CERTIFICATION_EXPIRE_TIME, TimeUnit.MINUTES)
+    }
+
+    private fun saveSuccessCertification(email: String) {
+        val key = redisUtil.getEmailCertificationSuccessKey(email)
+        redisUtil.setData(key, true, EMAIL_CERTIFICATION_SUCCESS_EXPIRE_MINUTE, TimeUnit.MINUTES)
+    }
+
+    private fun getSecretCode(email: String): String {
+        val key = redisUtil.getEmailCertificationKey(email)
+        return redisUtil.getData(key, String::class.java)
+            ?: throw BingsooException(AuthError.EMAIL_CERTIFICATION_NOT_FOUND)
+
+    }
+
+    private fun deleteSecretCode(email: String) {
+        val key = redisUtil.getEmailCertificationKey(email)
+        redisUtil.deleteData(key)
+    }
+
+    private fun isWrongCode(code: String, request: String): Boolean {
+        return !Objects.equals(code, request)
     }
 }
