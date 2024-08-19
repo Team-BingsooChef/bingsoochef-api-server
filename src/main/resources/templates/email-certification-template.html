@@ -7,13 +7,14 @@
     <style>
         body {
             font-family: 'Helvetica', 'Arial', sans-serif;
-            background-color: #e0f7fa; /* 밝은 청록색 배경 */
+            background-color: #94d6cb; /* 짙은 청록색 배경 */
             padding: 0;
             margin: 0;
+            color: #000000; /* 텍스트 기본 색상 검은색 */
         }
 
         .email-container {
-            background-color: #ffffff;
+            background-color: #ffffff; /* 흰색 컨텐츠 배경 */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -28,7 +29,7 @@
         }
 
         .header h1 {
-            color: #00796b; /* 짙은 청록색 텍스트 */
+            color: #000000; /* 검은색 텍스트 */
             font-size: 24px;
             margin: 0;
         }
@@ -36,18 +37,18 @@
         .content {
             margin-top: 20px;
             font-size: 16px;
-            color: #00796b; /* 짙은 청록색 텍스트 */
             line-height: 1.6;
         }
 
         .content p {
             margin: 10px 0;
+            color: #000000; /* 컨텐츠 글씨 검은색 */
         }
 
         .code {
             font-size: 32px;
             font-weight: bold;
-            color: #d32f2f; /* 시원한 느낌을 주는 붉은색 */
+            color: #000000; /* 인증번호 검은색 */
             text-align: center;
             margin: 20px 0;
         }
@@ -56,11 +57,40 @@
             text-align: center;
             margin-top: 40px;
             font-size: 12px;
-            color: #004d40; /* 짙은 청록색 텍스트 */
+            color: #000000; /* 푸터 글씨 검은색 */
         }
 
         .footer p {
             margin: 5px 0;
+        }
+
+        /* 다크모드 스타일 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #94d6cb; /* 다크모드 배경색 */
+                color: #ffffff; /* 다크모드 텍스트 색상 */
+            }
+
+            .email-container {
+                background-color: #ffffff; /* 다크모드에서도 컨텐츠 배경은 흰색 유지 */
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            }
+
+            .header h1 {
+                color: #000000; /* 다크모드에서 헤더 텍스트 검은색 */
+            }
+
+            .content p {
+                color: #000000; /* 다크모드에서 컨텐츠 텍스트 검은색 */
+            }
+
+            .code {
+                color: #000000; /* 다크모드에서 인증번호 텍스트 검은색 */
+            }
+
+            .footer {
+                color: #000000; /* 다크모드에서 푸터 텍스트 검은색 */
+            }
         }
     </style>
 </head>
@@ -74,7 +104,7 @@
         <p>빙수와 함께하는 BoingsooChef입니다.</p>
         <p>아래 인증번호를 입력하여 이메일을 인증해주세요.</p>
         <p>인증번호는 10분간만 유지됩니다.</p>
-        <div class="code" th:text="${verificationCode}">12345</div>
+        <div class="code" th:text="${certificationNumber}">123456</div>
         <p>만약 인증 요청을 하지 않으셨다면 이 이메일을 무시해 주세요.</p>
     </div>
     <div class="footer">
