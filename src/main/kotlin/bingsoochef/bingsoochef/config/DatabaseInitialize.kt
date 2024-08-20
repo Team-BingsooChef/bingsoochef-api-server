@@ -1,6 +1,6 @@
 package bingsoochef.bingsoochef.config
 
-import bingsoochef.bingsoochef.toppping.ToppingTypeRepository
+import bingsoochef.bingsoochef.toppping.persistence.ToppingTypeRepository
 import bingsoochef.bingsoochef.toppping.domain.ToppingType
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.annotation.PostConstruct
