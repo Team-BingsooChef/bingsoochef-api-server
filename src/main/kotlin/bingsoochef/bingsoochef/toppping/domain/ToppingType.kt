@@ -7,10 +7,10 @@ import jakarta.persistence.*
 class ToppingType(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "topping_type_id")
-    val id: Long,
+    val id: Long? = null,
 
     @Column(name = "topping_type_name")
     val name: String,
-    @Column(name = "topping_type_img")
-    val img: String
+    val frozenImg: String,
+    val defrostedImg: String
 )
