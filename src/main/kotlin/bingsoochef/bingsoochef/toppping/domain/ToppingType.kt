@@ -13,4 +13,16 @@ class ToppingType(
     val name: String,
     val frozenImg: String,
     val defrostedImg: String
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (other !is Topping) return false
+        if (this === other) return true
+
+        if (id == null || other.id == null) return false
+        return id == other.id
+    }
+
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
+}
