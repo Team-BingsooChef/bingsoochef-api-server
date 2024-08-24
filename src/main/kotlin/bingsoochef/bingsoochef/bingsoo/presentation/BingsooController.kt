@@ -2,6 +2,7 @@ package bingsoochef.bingsoochef.bingsoo.presentation
 
 import bingsoochef.bingsoochef.bingsoo.application.BingsooService
 import bingsoochef.bingsoochef.bingsoo.application.CreateBingsooCommand
+import bingsoochef.bingsoochef.bingsoo.application.UpdateBingsooCommand
 import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDetailResponse
@@ -41,6 +42,18 @@ class BingsooController(
 
     @PatchMapping()
     override fun updateBingsoo(@RequestBody request: UpdateBingsooRequest): ResponseEntity<BingsooResponse> {
-        TODO()
+        // TODO("user id를 access token에서 가져오도록 수정")
+        val userId = 1L
+
+        val updateCommand = UpdateBingsooCommand(
+            userId,
+            request.taste
+        )
+
+        val bingsoo = bingsooService.updateBingsoo(updateCommand)
+        val bingsooDto = BingsooDto.from(bingsoo)
+        val bingsooResponse = BingsooResponse.of(bingsooDto)
+
+        return ResponseEntity.status(HttpStatus.OK).body(bingsooResponse)
     }
 }
