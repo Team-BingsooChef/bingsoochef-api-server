@@ -5,5 +5,5 @@ import bingsoochef.bingsoochef.toppping.domain.QuizType
 data class QuizDto(
     val quizTitle: String,
     val quizType: QuizType,
-    val options: List<Pair<String, Boolean>>
+    val questions: List<Pair<String, Boolean>>
 )

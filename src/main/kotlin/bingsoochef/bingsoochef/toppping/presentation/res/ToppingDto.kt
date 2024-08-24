@@ -11,5 +11,5 @@ data class ToppingDto (
     val toppingTitle: String,
     val toppingContent: String,
     val toppingPosition: Long,
-    val createdTime: LocalDateTime
+    val toppingCreatedTime: LocalDateTime
 )
