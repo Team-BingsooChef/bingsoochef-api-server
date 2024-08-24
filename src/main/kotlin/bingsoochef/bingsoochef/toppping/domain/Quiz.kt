@@ -2,17 +2,22 @@ package bingsoochef.bingsoochef.toppping.domain
 
 import jakarta.persistence.*
 
-@Table(name = "topping_type")
+@Table(name = "quiz")
 @Entity
-class ToppingType(
+class Quiz(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "topping_type_id")
-    val id: Long? = null,
+    @Column(name = "quiz_id")
+    var id: Long? = null,
 
-    @Column(name = "topping_type_name")
-    val name: String,
-    val frozenImg: String,
-    val defrostedImg: String
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "topping_id")
+    var topping: Topping,
+
+    @Column(name = "quiz_title")
+    var title: String,
+    @Enumerated(EnumType.STRING)
+    var quizType: QuizType,
+    var wrongCount: Short = 0
 ) {
     override fun equals(other: Any?): Boolean {
         if (other !is Topping) return false

@@ -1,21 +1,20 @@
-package bingsoochef.bingsoochef.toppping.domain
+package bingsoochef.bingsoochef.bingsoo.domain
 
 import jakarta.persistence.*
 
-@Table(name = "topping_type")
+@Table(name = "bingsoo")
 @Entity
-class ToppingType(
+class Bingsoo(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "topping_type_id")
-    val id: Long? = null,
+    @Column(name = "bingsoo_id")
+    var id: Long? = null,
 
-    @Column(name = "topping_type_name")
-    val name: String,
-    val frozenImg: String,
-    val defrostedImg: String
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    var taste: Taste
 ) {
     override fun equals(other: Any?): Boolean {
-        if (other !is Topping) return false
+        if (other !is Bingsoo) return false
         if (this === other) return true
 
         if (id == null || other.id == null) return false

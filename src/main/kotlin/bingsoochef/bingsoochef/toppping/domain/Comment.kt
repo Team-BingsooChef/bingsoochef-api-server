@@ -1,18 +1,19 @@
 package bingsoochef.bingsoochef.toppping.domain
 
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
-@Table(name = "topping_type")
+@Table(name = "comment")
 @Entity
-class ToppingType(
+class Comment(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "topping_type_id")
-    val id: Long? = null,
+    @Column(name = "comment_id")
+    var id: Long? = null,
 
-    @Column(name = "topping_type_name")
-    val name: String,
-    val frozenImg: String,
-    val defrostedImg: String
+    @Column(name = "comment_content")
+    var content: String,
+    @Column(name = "comment_created_time")
+    var createdTime: LocalDateTime
 ) {
     override fun equals(other: Any?): Boolean {
         if (other !is Topping) return false
