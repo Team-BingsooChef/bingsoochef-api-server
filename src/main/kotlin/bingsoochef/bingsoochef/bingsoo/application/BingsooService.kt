@@ -23,4 +23,14 @@ class BingsooService(
 
         return bingsoo
     }
+
+    fun updateBingsoo(command: UpdateBingsooCommand): Bingsoo {
+        val bingsoo = userRepository.findById(command.userId)
+            .orElseThrow{ NotFoundException("존재하지 않는 사용자입니다.") }
+            .bingsoo
+
+        bingsoo.updateTaste(taste = command.taste)
+
+        return bingsoo
+    }
 }
