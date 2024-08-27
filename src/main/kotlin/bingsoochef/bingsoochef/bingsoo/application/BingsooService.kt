@@ -12,7 +12,8 @@ import org.springframework.stereotype.Service
 @Transactional
 class BingsooService(
     var userRepository: UserRepository,
-    var bingsooRepository: BingsooRepository) {
+    var bingsooRepository: BingsooRepository
+) {
 
     fun createBingsoo(command: CreateBingsooCommand): Bingsoo {
         var user: User = userRepository.findById(command.userId)
