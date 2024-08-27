@@ -2,7 +2,6 @@ package bingsoochef.bingsoochef.bingsoo.presentation
 
 import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
-import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDetailResponse
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
