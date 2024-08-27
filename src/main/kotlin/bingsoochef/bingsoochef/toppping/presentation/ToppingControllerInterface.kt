@@ -38,6 +38,7 @@ interface ToppingControllerInterface {
     @Operation(
         summary = "토핑 목록 조회 API",
         description = "bingsoo id를 가진 빙수의 토핑들을 조회합니다.<br>" +
+                "쿼리 파라미터인 b는 bingsoo id, p는 현재 페이지 번호입니다.<br>" +
                 "토핑은 8의 크기로 페이지네이션을 적용해 반환되며, 전체 페이지 범위는 0 ~ total page number(totalPage)입니다.<br>" +
                 "현재 페이지 번호가 전체 페이지 범위를 벗어날 경우 성공 응답에도 toppings의 정보가 반환되지 않습니다."
     )
