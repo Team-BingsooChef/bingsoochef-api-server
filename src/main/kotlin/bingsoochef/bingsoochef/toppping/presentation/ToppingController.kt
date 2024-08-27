@@ -4,6 +4,7 @@ import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
 import bingsoochef.bingsoochef.toppping.presentation.req.RegisterCommentRequest
 import bingsoochef.bingsoochef.toppping.presentation.req.TryQuizRequest
 import bingsoochef.bingsoochef.toppping.presentation.res.QuizResponse
+import bingsoochef.bingsoochef.toppping.presentation.res.ToppingPageResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.ToppingResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.TryResultResponse
 import org.springframework.http.ResponseEntity
@@ -15,6 +16,11 @@ class ToppingController : ToppingControllerInterface {
 
     @PostMapping
     override fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
+        TODO()
+    }
+
+    @GetMapping("")
+    override fun getToppingPage(@RequestParam(value = "b") bingsooId: Long, @RequestParam(value = "p") page: Int): ResponseEntity<ToppingPageResponse> {
         TODO()
     }
 
