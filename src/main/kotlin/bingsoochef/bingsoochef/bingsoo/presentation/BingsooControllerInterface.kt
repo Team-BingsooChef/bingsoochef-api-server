@@ -34,10 +34,10 @@ interface BingsooControllerInterface {
         summary = "빙수 조회 API",
         description = "bingsoo id를 통해 자신 혹은 다른 사용자의 빙수를 조회합니다."
     )
-    @ApiResponse(responseCode = "200", description = "빙수와 빙수가 가진 토핑 배열 반환",
-        content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = BingsooDetailResponse::class))))]
+    @ApiResponse(responseCode = "200", description = "조회한 빙수 반환",
+        content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = BingsooResponse::class))))]
     )
-    fun getBingsoo(@PathVariable(value = "bingsoo_id") bingsooId: Long): ResponseEntity<BingsooDetailResponse>
+    fun getBingsoo(@PathVariable(value = "bingsoo_id") bingsooId: Long): ResponseEntity<BingsooResponse>
 
 
     @Operation(
