@@ -33,4 +33,9 @@ class BingsooService(
 
         return bingsoo
     }
+
+    fun getBingsoo(bingsooId: Long): Bingsoo {
+        return bingsooRepository.findById(bingsooId)
+            .orElseThrow{ NotFoundException("존재하지 않는 빙수입니다.") }
+    }
 }
