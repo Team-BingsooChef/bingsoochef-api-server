@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.bingsoo.presentation.res
+package bingsoochef.bingsoochef.toppping.presentation.res
 
 data class ToppingAbstractDto (
     val toppingId: Long,
