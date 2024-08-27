@@ -14,6 +14,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springdoc.core.annotations.ParameterObject
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
@@ -47,7 +50,9 @@ interface ToppingControllerInterface {
             content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingPageResponse::class))))]),
         ApiResponse(responseCode = "404", description = "존재하지 않는 빙수임", content = [Content()])
     ])
-    fun getToppingPage(@RequestParam(value = "b") bingsooId: Long, @RequestParam(value = "p") page: Int): ResponseEntity<ToppingPageResponse>
+    fun getToppingPage(
+        @RequestParam(value = "b") bingsooId: Long,
+        @PageableDefault(page = 0, size = 8) @ParameterObject pageable: Pageable): ResponseEntity<ToppingPageResponse>
 
     @Operation(
         summary = "토핑 조회 API",

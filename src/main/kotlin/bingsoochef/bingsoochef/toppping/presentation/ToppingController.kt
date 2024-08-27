@@ -7,6 +7,8 @@ import bingsoochef.bingsoochef.toppping.presentation.res.QuizResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.ToppingPageResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.ToppingResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.TryResultResponse
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -20,7 +22,9 @@ class ToppingController : ToppingControllerInterface {
     }
 
     @GetMapping("")
-    override fun getToppingPage(@RequestParam(value = "b") bingsooId: Long, @RequestParam(value = "p") page: Int): ResponseEntity<ToppingPageResponse> {
+    override fun getToppingPage(
+        @RequestParam(value = "b") bingsooId: Long,
+        @PageableDefault(page = 0, size = 8) pageable: Pageable ): ResponseEntity<ToppingPageResponse> {
         TODO()
     }
 
