@@ -5,11 +5,14 @@ import bingsoochef.bingsoochef.bingsoo.domain.Taste
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 
-@SpringBootTest
-class JpaRepositoryTest(
-    private var bingsooRepository : BingsooRepository
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+class JpaRepositoryTest @Autowired constructor(
+     private var bingsooRepository : BingsooRepository
 ) : BehaviorSpec({
 
     Given("ID가 없는 빙수가 주어지고") {
