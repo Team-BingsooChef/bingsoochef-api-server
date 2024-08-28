@@ -2,7 +2,6 @@ package bingsoochef.bingsoochef.bingsoo.presentation
 
 import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
-import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDetailResponse
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,7 +16,7 @@ class BingsooController : BingsooControllerInterface {
     }
 
     @GetMapping("/{bingsoo-id}")
-    override fun getBingsoo(@PathVariable(value = "bingsoo-id") bingsooId: Long): ResponseEntity<BingsooDetailResponse> {
+    override fun getBingsoo(@PathVariable(value = "bingsoo-id") bingsooId: Long): ResponseEntity<BingsooResponse> {
         TODO()
     }
 
