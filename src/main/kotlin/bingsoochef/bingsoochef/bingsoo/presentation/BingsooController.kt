@@ -20,7 +20,7 @@ class BingsooController(
     @PostMapping
     override fun createBingsoo(@RequestBody request: CreateBingsooRequest) : ResponseEntity<BingsooResponse> {
         // TODO("user id를 access token에서 가져오도록 수정")
-        val userId = 1L
+        val userId = request.userId
 
         val createCommand = CreateBingsooCommand(
             userId,
@@ -46,7 +46,7 @@ class BingsooController(
     @PatchMapping()
     override fun updateBingsoo(@RequestBody request: UpdateBingsooRequest): ResponseEntity<BingsooResponse> {
         // TODO("user id를 access token에서 가져오도록 수정")
-        val userId = 1L
+        val userId = request.userId
 
         val updateCommand = UpdateBingsooCommand(
             userId,
