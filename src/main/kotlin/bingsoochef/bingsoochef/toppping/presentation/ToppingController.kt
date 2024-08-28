@@ -4,8 +4,11 @@ import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
 import bingsoochef.bingsoochef.toppping.presentation.req.RegisterCommentRequest
 import bingsoochef.bingsoochef.toppping.presentation.req.TryQuizRequest
 import bingsoochef.bingsoochef.toppping.presentation.res.QuizResponse
+import bingsoochef.bingsoochef.toppping.presentation.res.ToppingPageResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.ToppingResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.TryResultResponse
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
@@ -15,6 +18,13 @@ class ToppingController : ToppingControllerInterface {
 
     @PostMapping
     override fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
+        TODO()
+    }
+
+    @GetMapping("")
+    override fun getToppingPage(
+        @RequestParam(value = "b") bingsooId: Long,
+        @PageableDefault(page = 0, size = 8) pageable: Pageable ): ResponseEntity<ToppingPageResponse> {
         TODO()
     }
 

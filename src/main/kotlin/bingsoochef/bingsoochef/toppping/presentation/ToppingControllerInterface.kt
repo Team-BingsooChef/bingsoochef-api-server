@@ -5,6 +5,7 @@ import bingsoochef.bingsoochef.toppping.presentation.req.RegisterCommentRequest
 import bingsoochef.bingsoochef.toppping.presentation.req.TryQuizRequest
 import bingsoochef.bingsoochef.toppping.presentation.res.QuizResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.ToppingResponse
+import bingsoochef.bingsoochef.toppping.presentation.res.ToppingPageResponse
 import bingsoochef.bingsoochef.toppping.presentation.res.TryResultResponse
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.media.ArraySchema
@@ -13,9 +14,13 @@ import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.tags.Tag
+import org.springdoc.core.annotations.ParameterObject
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 
 @Tag(name = "Topping", description = "토핑 API")
 interface ToppingControllerInterface {
@@ -33,6 +38,21 @@ interface ToppingControllerInterface {
     ])
     fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse>
 
+    @Operation(
+        summary = "토핑 목록 조회 API",
+        description = "bingsoo id를 가진 빙수의 토핑들을 조회합니다.<br>" +
+                "쿼리 파라미터인 b는 bingsoo id, p는 현재 페이지 번호입니다.<br>" +
+                "토핑은 8의 크기로 페이지네이션을 적용해 반환되며, 전체 페이지 범위는 0 ~ total page number(totalPage)입니다.<br>" +
+                "현재 페이지 번호가 전체 페이지 범위를 벗어날 경우 성공 응답에도 toppings의 정보가 반환되지 않습니다."
+    )
+    @ApiResponses(value = [
+        ApiResponse(responseCode = "200", description = "조회한 토핑 목록 반환",
+            content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingPageResponse::class))))]),
+        ApiResponse(responseCode = "404", description = "존재하지 않는 빙수임", content = [Content()])
+    ])
+    fun getToppingPage(
+        @RequestParam(value = "b") bingsooId: Long,
+        @PageableDefault(page = 0, size = 8) @ParameterObject pageable: Pageable): ResponseEntity<ToppingPageResponse>
 
     @Operation(
         summary = "토핑 조회 API",
