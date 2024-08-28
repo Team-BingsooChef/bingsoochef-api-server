@@ -36,7 +36,11 @@ class BingsooController(
 
     @GetMapping("/{bingsoo-id}")
     override fun getBingsoo(@PathVariable(value = "bingsoo-id") bingsooId: Long): ResponseEntity<BingsooResponse> {
-        TODO()
+        val bingsoo = bingsooService.getBingsoo(bingsooId)
+        val bingsooDto = BingsooDto.from(bingsoo)
+        val bingsooResponse = BingsooResponse.of(bingsooDto)
+
+        return ResponseEntity.status(HttpStatus.OK).body(bingsooResponse)
     }
 
     @PatchMapping()
