@@ -8,22 +8,61 @@ import io.kotest.matchers.shouldNotBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.data.repository.findByIdOrNull
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class JpaRepositoryTest @Autowired constructor(
-     private var bingsooRepository : BingsooRepository
+    private var bingsooRepository : BingsooRepository
 ) : BehaviorSpec({
 
     Given("ID가 없는 빙수가 주어지고") {
-        var givenBingsoo = Bingsoo(null, Taste.valueOf("STRAWBERRY"))
+        val givenBingsoo = Bingsoo(null, Taste.valueOf("STRAWBERRY"))
 
-        When("빙수를 저장했을 때") {
-            var resultBingsoo = bingsooRepository.save(givenBingsoo)
+        When("빙수를 저장해 ID가 생겼을 때") {
+            val resultId = bingsooRepository.save(givenBingsoo).id
 
-            Then("ID를 가지는 주어진 정보의 빙수가 생성된다.") {
-                resultBingsoo.id shouldNotBe null
-                resultBingsoo.taste shouldBe givenBingsoo.taste
+            Then("빙수를 다시 조회할 수 있다.") {
+                bingsooRepository.findByIdOrNull(resultId) shouldNotBe null
+            }
+        }
+    }
+
+    Given("새로운 빙수를 저장하고") {
+        val givenBingsoo = Bingsoo(null, Taste.valueOf("STRAWBERRY"))
+        val savedBingsoo = bingsooRepository.save(givenBingsoo)
+
+        When("빙수를 다시 조회했을 때") {
+            val foundedBingsoo = bingsooRepository.findByIdOrNull(savedBingsoo.id)!!
+
+            Then("equals의 reflexive 테스트") {
+                givenBingsoo.equals(givenBingsoo) shouldBe true
+                savedBingsoo.equals(savedBingsoo) shouldBe true
+                foundedBingsoo.equals(foundedBingsoo) shouldBe true
+            }
+            Then("equals의 symmetric 테스트") {
+                givenBingsoo.equals(savedBingsoo) shouldBe true
+                savedBingsoo.equals(givenBingsoo) shouldBe true
+
+                givenBingsoo.equals(foundedBingsoo) shouldBe true
+                foundedBingsoo.equals(givenBingsoo) shouldBe true
+
+                savedBingsoo.equals(foundedBingsoo) shouldBe true
+                foundedBingsoo.equals(savedBingsoo) shouldBe true
+            }
+            Then("equals의 transitive 테스트") {
+                givenBingsoo.equals(savedBingsoo) shouldBe true
+                savedBingsoo.equals(foundedBingsoo) shouldBe true
+                foundedBingsoo.equals(givenBingsoo) shouldBe true
+            }
+            Then("equals의 consistent 테스트") {
+                givenBingsoo.equals(foundedBingsoo) shouldBe true
+                savedBingsoo.equals(foundedBingsoo) shouldBe true
+
+                foundedBingsoo.taste = Taste.valueOf("CHOCO")
+
+                givenBingsoo.equals(foundedBingsoo) shouldBe true
+                savedBingsoo.equals(foundedBingsoo) shouldBe true
             }
         }
     }
