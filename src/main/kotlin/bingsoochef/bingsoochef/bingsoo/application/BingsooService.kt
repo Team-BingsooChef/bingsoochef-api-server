@@ -5,8 +5,8 @@ import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.global.error.NotFoundException
 import bingsoochef.bingsoochef.user.domain.User
 import bingsoochef.bingsoochef.user.persistence.UserRepository
-import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
