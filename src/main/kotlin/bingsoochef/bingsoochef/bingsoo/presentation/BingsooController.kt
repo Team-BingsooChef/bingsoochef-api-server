@@ -7,9 +7,12 @@ import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDto
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooResponse
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
+private val logger = KotlinLogging.logger {}
 
 @RestController()
 @RequestMapping("/users/bingsoo")
