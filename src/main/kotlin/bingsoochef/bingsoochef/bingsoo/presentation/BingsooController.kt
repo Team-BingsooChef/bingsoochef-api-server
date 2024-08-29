@@ -25,10 +25,7 @@ class BingsooController(
         // TODO("user id를 access token에서 가져오도록 수정")
         val userId = request.userId
 
-        val createCommand = CreateBingsooCommand(
-            userId,
-            request.taste
-        )
+        val createCommand = CreateBingsooCommand(userId, request.taste)
 
         val bingsoo = bingsooService.createBingsoo(createCommand)
         val bingsooDto = BingsooDto.from(bingsoo)
@@ -51,10 +48,7 @@ class BingsooController(
         // TODO("user id를 access token에서 가져오도록 수정")
         val userId = request.userId
 
-        val updateCommand = UpdateBingsooCommand(
-            userId,
-            request.taste
-        )
+        val updateCommand = UpdateBingsooCommand(userId, request.taste)
 
         val bingsoo = bingsooService.updateBingsoo(updateCommand)
         val bingsooDto = BingsooDto.from(bingsoo)
