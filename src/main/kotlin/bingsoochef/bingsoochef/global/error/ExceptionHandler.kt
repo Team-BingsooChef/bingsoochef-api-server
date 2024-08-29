@@ -11,7 +11,7 @@ class ExceptionHandler {
     @ExceptionHandler(IllegalArgumentException::class)
     fun handleIllegalArgumentException(e: IllegalArgumentException): ResponseEntity<ErrorResponse> {
         return ResponseEntity<ErrorResponse>(
-            ErrorResponse(HttpStatus.BAD_REQUEST.value(), "잘못된 요청입니다."),HttpStatus.BAD_REQUEST)
+            ErrorResponse(HttpStatus.BAD_REQUEST.value(), e.message),HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(CustomException::class)
