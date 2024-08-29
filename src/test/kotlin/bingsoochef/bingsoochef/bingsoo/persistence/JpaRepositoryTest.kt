@@ -59,10 +59,11 @@ class JpaRepositoryTest @Autowired constructor(
                 givenBingsoo.equals(foundedBingsoo) shouldBe true
                 savedBingsoo.equals(foundedBingsoo) shouldBe true
 
-                foundedBingsoo.taste = Taste.valueOf("CHOCO")
+                foundedBingsoo.updateTaste(Taste.valueOf("CHOCO"))
 
                 givenBingsoo.equals(foundedBingsoo) shouldBe true
                 savedBingsoo.equals(foundedBingsoo) shouldBe true
+                foundedBingsoo.taste shouldBe Taste.valueOf("CHOCO")
             }
         }
     }
