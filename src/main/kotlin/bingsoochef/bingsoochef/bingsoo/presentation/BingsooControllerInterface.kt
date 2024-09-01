@@ -19,7 +19,8 @@ interface BingsooControllerInterface {
 
     @Operation(
         summary = "빙수 생성 API",
-        description = "주어진 access token 속 user id를 가진 사용자에게 빙수를 생성합니다."
+        description = "주어진 access token 속 user id를 가진 사용자에게 빙수를 생성합니다.<br>" +
+                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "201", description = "생성된 빙수 반환",
@@ -41,7 +42,8 @@ interface BingsooControllerInterface {
 
     @Operation(
         summary = "빙수 수정 API",
-        description = "주어진 access token 속 bingsoo id를 가진 빙수의 맛을 요청한 값으로 수정합니다."
+        description = "주어진 access token 속 bingsoo id를 가진 빙수의 맛을 요청한 값으로 수정합니다." +
+                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
     )
     @ApiResponse(responseCode = "200", description = "수정된 빙수 반환",
         content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = BingsooResponse::class))))]

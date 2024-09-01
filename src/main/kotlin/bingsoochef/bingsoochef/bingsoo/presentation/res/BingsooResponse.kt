@@ -1,5 +1,11 @@
-package bingsoochef.bingsoochef.bingsoo.presentation.res;
+package bingsoochef.bingsoochef.bingsoo.presentation.res
 
-data class BingsooResponse (
+data class BingsooResponse(
     val bingsoo: BingsooDto
-)
+) {
+    companion object {
+        fun of(bingsooDto: BingsooDto): BingsooResponse {
+            return BingsooResponse(bingsooDto)
+        }
+    }
+}

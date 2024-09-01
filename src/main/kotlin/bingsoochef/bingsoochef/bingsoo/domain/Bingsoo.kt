@@ -13,6 +13,10 @@ class Bingsoo(
     @Enumerated(EnumType.STRING)
     var taste: Taste
 ) {
+    fun updateTaste(taste: Taste) {
+        this.taste = taste
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is Bingsoo) return false
         if (this === other) return true
