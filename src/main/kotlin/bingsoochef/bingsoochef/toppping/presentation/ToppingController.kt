@@ -50,12 +50,14 @@ class ToppingController(
     }
 
     @GetMapping("/{topping-id}")
-    override fun getTopping(@PathVariable(value = "topping-id") toppingId: Long): ResponseEntity<ToppingResponse> {
+    override fun getTopping(@PathVariable(value = "topping-id") toppingId: Long,
+                            @RequestParam(value = "user-id") userId: Long): ResponseEntity<ToppingResponse> {
         TODO()
     }
 
     @GetMapping("/{topping-id}/quiz")
-    override fun getQuiz(@PathVariable(value = "topping-id") toppingId: Long): ResponseEntity<QuizResponse> {
+    override fun getQuiz(@PathVariable(value = "topping-id") toppingId: Long,
+                         @RequestParam(value = "user-id") userId: Long): ResponseEntity<QuizResponse> {
         TODO()
     }
 
