@@ -49,7 +49,13 @@ class ExceptionHandler {
                             else -> "$path 의 타입은 ${cause.targetType.simpleName}이어야 합니다."
                         }
                     }
-                    is MismatchedInputException -> "$path 을/를 ${cause.targetType.simpleName}에 매핑할 수 없습니다."
+                    is MismatchedInputException -> {
+                        if (cause.targetType != null)
+                            "${path}을/를 ${cause.targetType.simpleName}에 매핑할 수 없습니다."
+                        else
+                            "${path}을/를 매핑하는 데 실패하였습니다."
+                    }
+
                     else -> "JSON 매핑에 실패하였습니다."
                 }
             }
