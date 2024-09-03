@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.toppping.application
 
 import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
+import bingsoochef.bingsoochef.global.error.DuplicateException
 import bingsoochef.bingsoochef.global.error.NotFoundException
 import bingsoochef.bingsoochef.toppping.domain.Question
 import bingsoochef.bingsoochef.toppping.domain.Quiz
@@ -34,6 +35,9 @@ class ToppingService(
             .orElseThrow { NotFoundException("존재하지 않는 토핑 유형입니다.") }
         val chef = userRepository.findById(command.chefId)
             .orElseThrow { NotFoundException("존재하지 않는 사용자입니다.") }
+
+        if (toppingRepository.existsByBingsooAndChef(bingsoo, chef))
+            throw DuplicateException("해당 빙수에 이미 토핑을 만들었습니다.")
 
         val topping = toppingRepository.save(
             Topping(
