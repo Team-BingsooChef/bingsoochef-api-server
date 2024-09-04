@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.toppping.application
 
 import bingsoochef.bingsoochef.toppping.domain.QuizType
+import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
 
 data class CreateToppingCommand(
     val bingsooId: Long,
@@ -30,4 +31,20 @@ data class CreateToppingCommand(
         }
         else
             false
-)
+) {
+    companion object {
+        fun of(userId: Long, request: CreateToppingRequest): CreateToppingCommand {
+            return CreateToppingCommand(
+                bingsooId = request.bingsooId,
+                chefId = userId,
+                chefName = request.topping.chefName,
+                toppingTitle = request.topping.toppingTitle,
+                toppingContent = request.topping.toppingContent,
+                toppingTypeId = request.toppingTypeId,
+                quizType = request.quiz?.quizType,
+                quizTitle = request.quiz?.quizTitle,
+                questions = request.quiz?.questions
+            )
+        }
+    }
+}

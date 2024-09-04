@@ -21,18 +21,7 @@ class ToppingController(
 
     @PostMapping
     override fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
-        val command =
-            CreateToppingCommand(
-                bingsooId = request.bingsooId,
-                chefId = request.userId,
-                chefName = request.topping.chefName,
-                toppingTitle = request.topping.toppingTitle,
-                toppingContent = request.topping.toppingContent,
-                toppingTypeId = request.toppingTypeId,
-                quizType = request.quiz?.quizType,
-                quizTitle = request.quiz?.quizTitle,
-                questions = request.quiz?.questions
-            )
+        val command = CreateToppingCommand.of(request.userId, request)
 
         val topping : Topping = toppingService.createTopping(command)
 
