@@ -28,13 +28,16 @@ interface ToppingControllerInterface {
     @Operation(
         summary = "토핑 생성 API",
         description = "Request body 속 bingsoo id를 가진 빙수에 토핑을 생성합니다.<br>" +
-                "이때 주어진 access token 속 user id를 chef로 합니다."
+                "이때 주어진 access token 속 user id를 chef로 합니다. <br>" +
+                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다. <br>" +
+                "QuizType이 OX인 경우: 정답인 선지를 first에 답아 요청합니다. (second 값 무관) <br>" +
+                "QuizType이 Multiple인 경우: 각 선지의 내용을 first에, 선지의 정답 여부를 second에 담아 요청합니다. <br>"
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "201", description = "생성된 토핑 반환",
             content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingResponse::class))))]),
-        ApiResponse(responseCode = "400", description = "잘못된 QuizType을 요청함 / QuizType과 Option이 맞지 않음", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "존재하지 않는 빙수임", content = [Content()])
+        ApiResponse(responseCode = "400", description = "잘못된 QuizType을 요청 / QuizType과 Question의 양식이 맞지 않음 / 해당 빙수에 이미 토핑을 생성함", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "존재하지 않는 사용자 or 빙수 or 퀴즈타입", content = [Content()])
     ])
     fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse>
 
@@ -59,7 +62,8 @@ interface ToppingControllerInterface {
         description = "topping id를 가진 토핑을 조회합니다.<br>" +
                 "access token의 user id가 chef id나 topping이 속한 bingsoo의 customer id와 동일한 경우에만 토핑에 접근할 수 있습니다.<br>" +
                 "access token의 user id가 customer id와 동일한 경우, topping의 is hiden이 false일 때만 토핑을 조회할 수 있으며 " +
-                "is hidden이 true일 땐 성공 응답에도 topping의 정보가 반환되지 않습니다.<br>"
+                "is hidden이 true일 땐 성공 응답에도 topping의 정보가 반환되지 않습니다.<br>" +
+                "현재 Request parameter 중 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "조회한 토핑 반환",
@@ -67,14 +71,16 @@ interface ToppingControllerInterface {
         ApiResponse(responseCode = "401", description = "토핑에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
         ApiResponse(responseCode = "404", description = "존재하지 않는 토핑임", content = [Content()])
     ])
-    fun getTopping(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<ToppingResponse>
+    fun getTopping(@PathVariable(value = "topping_id") toppingId: Long,
+                   @RequestParam(value = "user-id") userId: Long): ResponseEntity<ToppingResponse>
 
 
     @Operation(
         summary = "퀴즈 조회 API",
         description = "topping id를 가진 토핑의 퀴즈를 조회합니다.<br>" +
                 "access token의 user id가 chef id나 topping이 속한 bingsoo의 customer id와 동일한 경우에만 퀴즈에 접근할 수 있습니다.<br>" +
-                "토핑에 퀴즈가 없거나, 이미 해결한 퀴즈인 경우 실패로 응답합니다."
+                "토핑에 퀴즈가 없거나, 이미 해결한 퀴즈인 경우 실패로 응답합니다." +
+                "현재 Request parameter 중 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "조회한 퀴즈 반환",
@@ -82,14 +88,16 @@ interface ToppingControllerInterface {
         ApiResponse(responseCode = "401", description = "토핑에 접근할 수 없음 (셰프도 손님도 아님)", content = [Content()]),
         ApiResponse(responseCode = "404", description = "존재하지 않는 토핑/퀴즈이거나 이미 해결한 퀴즈", content = [Content()])
     ])
-    fun getQuiz(@PathVariable(value = "topping_id") toppingId: Long): ResponseEntity<QuizResponse>
+    fun getQuiz(@PathVariable(value = "topping_id") toppingId: Long,
+                @RequestParam(value = "user-id") userId: Long): ResponseEntity<QuizResponse>
 
 
     @Operation(
         summary = "퀴즈 정답 제출 API",
         description = "quiz id를 가진 퀴즈에 정답을 제출합니다.<br>" +
                 "access token의 user id가 toppping에 대한 chef id나 customer id와 동일한 경우에만 제출을 시도할 수 있습니다.<br>" +
-                "토핑에 퀴즈가 없거나, 이미 해결한 퀴즈인 경우 실패로 응답합니다."
+                "토핑에 퀴즈가 없거나, 이미 해결한 퀴즈인 경우 실패로 응답합니다." +
+                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "정답 제출 결과 반환",
@@ -105,7 +113,8 @@ interface ToppingControllerInterface {
         description = "topping id를 가진 토핑에 comment를 등록합니다.<br>" +
                 "access token의 user id가 toppping에 대한 chef id나 customer id와 동일한 경우에만 comment를 등록할 수 있습니다.<br>" +
                 "access token의 user id가 customer id와 동일한 경우, topping의 is hiden이 false일 때만 comment를 등록할 수 있으며 " +
-                "is hidden이 true일 땐 성공 응답에도 comment가 등록되지 않습니다."
+                "is hidden이 true일 땐 성공 응답에도 comment가 등록되지 않습니다." +
+                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "201", description = "생성된 코멘트를 포함한 토핑 반환",

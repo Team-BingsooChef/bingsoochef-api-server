@@ -26,7 +26,7 @@ class Topping(
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id", unique = true)
-    var comment: Comment,
+    var comment: Comment?,
 
     @Column(nullable = false)
     var chefName: String,
