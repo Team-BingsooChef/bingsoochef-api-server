@@ -3,6 +3,7 @@ package bingsoochef.bingsoochef.toppping.application
 import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.global.error.DuplicateException
 import bingsoochef.bingsoochef.global.error.NotFoundException
+import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
 import bingsoochef.bingsoochef.toppping.domain.Question
 import bingsoochef.bingsoochef.toppping.domain.Quiz
 import bingsoochef.bingsoochef.toppping.domain.QuizType
@@ -27,7 +28,7 @@ class ToppingService(
     private val bingsooRepository: BingsooRepository
 ) {
 
-    fun createTopping(command: CreateToppingCommand): Topping {
+    fun createTopping(command: CreateToppingCommand): ToppingInfo {
 
         val bingsoo = bingsooRepository.findById(command.bingsooId)
             .orElseThrow { NotFoundException("존재하지 않는 빙수입니다.") }
@@ -69,7 +70,7 @@ class ToppingService(
             )
         }
 
-        return topping
+        return ToppingInfo.from(topping)
     }
 
     private fun createQuestion(quiz: Quiz, questions : List<Pair<String, Boolean>>): List<Question> {
