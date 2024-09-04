@@ -21,7 +21,8 @@ class ToppingController(
 
     @PostMapping
     override fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse> {
-        val command = CreateToppingCommand.of(request.userId, request)
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val command = request.toCommand(request.userId)
 
         val toppingInfo : ToppingInfo = toppingService.createTopping(command)
 
