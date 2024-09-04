@@ -2,6 +2,7 @@ package bingsoochef.bingsoochef.toppping.presentation
 
 import bingsoochef.bingsoochef.toppping.application.CreateToppingCommand
 import bingsoochef.bingsoochef.toppping.application.ToppingService
+import bingsoochef.bingsoochef.toppping.domain.Comment
 import bingsoochef.bingsoochef.toppping.domain.Topping
 import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
 import bingsoochef.bingsoochef.toppping.presentation.req.RegisterCommentRequest
@@ -25,8 +26,7 @@ class ToppingController(
 
         val topping : Topping = toppingService.createTopping(command)
 
-        val toppingDto = ToppingDto.from(topping)
-        val toppingResponse = ToppingResponse(topping = toppingDto, comment = null)
+        val toppingResponse = convertToToppingResponse(topping = topping, comment = null)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(toppingResponse)
     }
@@ -58,5 +58,11 @@ class ToppingController(
     @PostMapping("/comments")
     override fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
         TODO()
+    }
+
+    private fun convertToToppingResponse(topping: Topping, comment: Comment?): ToppingResponse {
+        val toppingDto = ToppingDto.from(topping)
+
+        return ToppingResponse(topping = toppingDto, comment = null)
     }
 }
