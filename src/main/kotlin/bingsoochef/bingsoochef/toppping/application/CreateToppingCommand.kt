@@ -19,18 +19,16 @@ data class CreateToppingCommand(
 
     val isQuiz : Boolean =
         if (quizType != null && quizTitle != null) {
-            if (quizType == QuizType.OX && (questions.isNullOrEmpty() || questions.size != 1 || (questions[0].first != "O" && questions[0].first != "X")))
-                throw IllegalArgumentException("OX 퀴즈는 O와 X 중 정답인 선지 하나를 가져야 합니다.")
-            if (quizType == QuizType.MULTIPLE_CHOICE) {
-                if (questions.isNullOrEmpty() )
-                    throw IllegalArgumentException("객관식 퀴즈에는 선지가 1개 이상이어야 합니다.")
-                if ( questions.count { it.second } != 1)
-                    throw IllegalArgumentException("객관식 퀴즈에는 정답 선지는 1개입니다.")
-            }
+            if (quizType == QuizType.OX)
+                isValidOX(questions)
+            if (quizType == QuizType.MULTIPLE_CHOICE)
+                isValidMultipleChoice(questions)
             true
         }
-        else
+        else if (quizType == null && quizTitle == null)
             false
+        else
+            throw IllegalArgumentException("생성할 토핑에 대한 퀴즈 정보가 올바르지 않습니다.")
 ) {
     companion object {
         fun of(userId: Long, request: CreateToppingRequest): CreateToppingCommand {
@@ -47,4 +45,16 @@ data class CreateToppingCommand(
             )
         }
     }
+}
+
+private fun isValidOX(questions : List<Pair<String, Boolean>>?)  {
+    if (questions.isNullOrEmpty() || questions.size != 1 || (questions[0].first != "O" && questions[0].first != "X"))
+        throw IllegalArgumentException("OX 퀴즈는 O와 X 중 정답인 선지 하나를 가져야 합니다.")
+}
+
+private fun isValidMultipleChoice(questions: List<Pair<String, Boolean>>?)  {
+    if (questions.isNullOrEmpty() )
+        throw IllegalArgumentException("객관식 퀴즈에는 선지가 1개 이상이어야 합니다.")
+    if ( questions.count { it.second } != 1)
+        throw IllegalArgumentException("객관식 퀴즈에는 정답 선지는 1개입니다.")
 }
