@@ -28,14 +28,16 @@ interface ToppingControllerInterface {
     @Operation(
         summary = "토핑 생성 API",
         description = "Request body 속 bingsoo id를 가진 빙수에 토핑을 생성합니다.<br>" +
-                "이때 주어진 access token 속 user id를 chef로 합니다." +
-                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다."
+                "이때 주어진 access token 속 user id를 chef로 합니다. <br>" +
+                "현재 Request body의 user id는 로그인이 적용되기 전까지 사용하는 임시값입니다. <br>" +
+                "QuizType이 OX인 경우: 정답인 선지를 first에 답아 요청합니다. (second 값 무관) <br>" +
+                "QuizType이 Multiple인 경우: 각 선지의 내용을 first에, 선지의 정답 여부를 second에 담아 요청합니다. <br>"
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "201", description = "생성된 토핑 반환",
             content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingResponse::class))))]),
-        ApiResponse(responseCode = "400", description = "잘못된 QuizType을 요청함 / QuizType과 Option이 맞지 않음", content = [Content()]),
-        ApiResponse(responseCode = "404", description = "존재하지 않는 빙수임", content = [Content()])
+        ApiResponse(responseCode = "400", description = "잘못된 QuizType을 요청 / QuizType과 Question의 양식이 맞지 않음 / 해당 빙수에 이미 토핑을 생성함", content = [Content()]),
+        ApiResponse(responseCode = "404", description = "존재하지 않는 사용자 or 빙수 or 퀴즈타입", content = [Content()])
     ])
     fun createTopping(@RequestBody request: CreateToppingRequest): ResponseEntity<ToppingResponse>
 
