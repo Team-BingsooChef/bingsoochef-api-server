@@ -38,7 +38,7 @@ class Topping(
     var position: Long,
     @Column(name = "topping_created_time")
     var createdTime: LocalDateTime,
-    var isHiden: Boolean
+    var isHidden: Boolean
 
 ) {
     override fun equals(other: Any?): Boolean {

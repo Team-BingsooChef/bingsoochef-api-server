@@ -52,7 +52,7 @@ class ToppingService(
                 content = command.toppingContent,
                 position = toppingRepository.countByBingsooIs(bingsoo) + 1,
                 createdTime = LocalDateTime.now(),
-                isHiden = command.isQuiz
+                isHidden = command.isQuiz
             )
         )
 
