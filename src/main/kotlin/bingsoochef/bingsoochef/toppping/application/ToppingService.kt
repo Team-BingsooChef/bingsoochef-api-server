@@ -4,6 +4,7 @@ import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.global.error.DuplicateException
 import bingsoochef.bingsoochef.global.error.NotFoundException
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
+import bingsoochef.bingsoochef.toppping.application.dto.ToppingPageInfo
 import bingsoochef.bingsoochef.toppping.domain.Question
 import bingsoochef.bingsoochef.toppping.domain.Quiz
 import bingsoochef.bingsoochef.toppping.domain.QuizType
@@ -13,9 +14,13 @@ import bingsoochef.bingsoochef.toppping.persistence.QuizRepository
 import bingsoochef.bingsoochef.toppping.persistence.ToppingRepository
 import bingsoochef.bingsoochef.toppping.persistence.ToppingTypeRepository
 import bingsoochef.bingsoochef.user.persistence.UserRepository
+import io.github.oshai.kotlinlogging.KotlinLogging
+import org.springframework.data.domain.Page
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+
+private val logger = KotlinLogging.logger {}
 
 @Transactional
 @Service
@@ -102,5 +107,15 @@ class ToppingService(
                 }
             }
         }
+    }
+
+    @Transactional(readOnly = true)
+    fun getToppingPage(command: GetToppingPageCommand): ToppingPageInfo {
+        val bingsoo = bingsooRepository.findById(command.bingsooId)
+            .orElseThrow{ NotFoundException("존재하지 않는 빙수입니다.") }
+
+        val toppingPage : Page<Topping> = toppingRepository.findAllByBingsoo(bingsoo, command.pageable)
+
+        return ToppingPageInfo.from(toppingPage)
     }
 }
