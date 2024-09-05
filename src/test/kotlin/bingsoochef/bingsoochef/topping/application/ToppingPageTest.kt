@@ -3,7 +3,6 @@ package bingsoochef.bingsoochef.topping.application
 import bingsoochef.bingsoochef.toppping.application.GetToppingPageCommand
 import bingsoochef.bingsoochef.toppping.application.ToppingService
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingPageInfo
-import bingsoochef.bingsoochef.toppping.persistence.ToppingRepository
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.ints.shouldBeExactly
 import io.kotest.matchers.ints.shouldBeInRange
