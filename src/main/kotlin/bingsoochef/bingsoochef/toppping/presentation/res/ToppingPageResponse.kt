@@ -11,6 +11,7 @@ data class ToppingPageResponse(
     class ToppingDto(
         val toppingId: Long,
         val toppingTypeId: Long,
+        val chefName: String,
         val toppingTitle: String,
         val toppingPosition: Long,
         val isHidden: Boolean
@@ -25,6 +26,7 @@ data class ToppingPageResponse(
                 toppings = toppingPageInfo.toppings.map { ToppingDto(
                     toppingId = it.id,
                     toppingTypeId = it.toppingTypeId,
+                    chefName = it.chefName,
                     toppingTitle = it.title,
                     toppingPosition = it.position,
                     isHidden = it.isHidden

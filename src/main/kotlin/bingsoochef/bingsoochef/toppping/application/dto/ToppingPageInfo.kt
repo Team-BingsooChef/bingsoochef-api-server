@@ -12,6 +12,7 @@ data class ToppingPageInfo (
     class ToppingDto(
         val id: Long,
         val toppingTypeId: Long,
+        val chefName: String,
         val title: String,
         val position: Long,
         val isHidden: Boolean
@@ -27,6 +28,7 @@ data class ToppingPageInfo (
                         ToppingDto(
                             id = it.id!!,
                             toppingTypeId = it.toppingType.id!!,
+                            chefName = it.chefName,
                             title = it.title,
                             position = it.position,
                             isHidden = it.isHidden
