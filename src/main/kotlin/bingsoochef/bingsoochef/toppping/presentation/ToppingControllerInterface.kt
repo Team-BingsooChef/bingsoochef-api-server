@@ -45,13 +45,15 @@ interface ToppingControllerInterface {
         summary = "토핑 목록 조회 API",
         description = "bingsoo id를 가진 빙수의 토핑들을 조회합니다.<br>" +
                 "쿼리 파라미터인 b는 bingsoo id, p는 현재 페이지 번호입니다.<br>" +
-                "토핑은 8의 크기로 페이지네이션을 적용해 반환되며, 전체 페이지 범위는 0 ~ total page number(totalPage)입니다.<br>" +
-                "현재 페이지 번호가 전체 페이지 범위를 벗어날 경우 성공 응답에도 toppings의 정보가 반환되지 않습니다."
+                "토핑은 8의 크기로 페이지네이션을 적용해 반환됩니다.<br>" +
+                "totalPages는 페이지 개수, totalElements는 빙수의 토핑 개수입니다.<br>" +
+                "토핑은 8의 크기로 페이지네이션을 적용해 반환되며, 페이지 번호의 범위는 0 ~ totalPages - 1입니다.<br>" +
+                "요청한 페이지 번호가 해당 범위를 벗어날 경우 성공 응답에도 toppings는 빈 배열로 반환됩니다."
     )
     @ApiResponses(value = [
         ApiResponse(responseCode = "200", description = "조회한 토핑 목록 반환",
             content = [Content(mediaType = "application/json", array = (ArraySchema(schema = Schema(implementation = ToppingPageResponse::class))))]),
-        ApiResponse(responseCode = "404", description = "존재하지 않는 빙수임", content = [Content()])
+        ApiResponse(responseCode = "404", description = "존재하지 않는 빙수", content = [Content()])
     ])
     fun getToppingPage(
         @RequestParam(value = "b") bingsooId: Long,
