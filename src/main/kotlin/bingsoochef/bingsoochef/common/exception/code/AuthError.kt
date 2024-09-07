@@ -10,7 +10,8 @@ enum class AuthError(
     EMAIL_FORMAT_INVALID(HttpStatus.BAD_REQUEST, "A001", "잘못된 이메일 형식"),
     EMAIL_SEND_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "A002", "메일 발송 실패"),
     EMAIL_CERTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "A003", "인증 정보를 찾을 수 없음"),
-    EMAIL_CERTIFICATION_FAILED(HttpStatus.BAD_REQUEST, "A004", "인증 실패, 인증을 다시 요청해주세요");
+    EMAIL_CERTIFICATION_FAILED(HttpStatus.BAD_REQUEST, "A004", "인증 실패, 인증을 다시 요청해주세요"),
+    EMAIL_DUPLICATED(HttpStatus.BAD_REQUEST, "A005", "이미 가입된 이메일입니다");
 
     override fun httpStatus(): HttpStatus {
         return httpStatus
