@@ -1,5 +1,6 @@
 package bingsoochef.bingsoochef.toppping.presentation
 
+import bingsoochef.bingsoochef.toppping.application.GetToppingCommand
 import bingsoochef.bingsoochef.toppping.application.GetToppingPageCommand
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
 import bingsoochef.bingsoochef.toppping.application.ToppingService
@@ -48,7 +49,15 @@ class ToppingController(
     @GetMapping("/{topping-id}")
     override fun getTopping(@PathVariable(value = "topping-id") toppingId: Long,
                             @RequestParam(value = "user-id") userId: Long): ResponseEntity<ToppingResponse> {
-        TODO()
+
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val getToppingCommand = GetToppingCommand(userId, toppingId)
+
+        val (toppingInfo, commentInfo) = toppingService.getTopping(getToppingCommand)
+
+        val toppingResponse = ToppingResponse.of(toppingInfo, commentInfo)
+
+        return ResponseEntity.status(HttpStatus.OK).body(toppingResponse)
     }
 
     @GetMapping("/{topping-id}/quiz")
