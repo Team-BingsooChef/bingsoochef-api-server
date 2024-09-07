@@ -43,15 +43,19 @@ class Topping(
 
 ) {
     fun isReadableBy(user: User) {
-        // 자신의 빙수가 아님
-        if (user.bingsoo != bingsoo) {
-            // 자신이 작성한 토핑도 아님
-            if (user != chef)
-                throw ForbiddenException("사용자 ${user.userId}은(는) 요청한 토핑에 접근할 수 없습니다.")
+        // 셰프인 경우: 항상 접근 가능
+        if (chef == user)
+            return
+
+        // 손님인 경우: 녹은 토핑에만 접근 가능
+        if (user.bingsoo == bingsoo) {
+            if (isHidden)
+                throw ForbiddenException("요청한 토핑이 아직 녹지 않았습니다.")
+            return
         }
 
-        else (isHidden)
-            throw ForbiddenException("요청한 토핑이 아직 녹지 않았습니다.")
+        // 셰프도 손님도 아닌 경우: 항상 접근 불가
+        throw ForbiddenException("사용자 ${user.userId}은(는) 요청한 토핑에 접근할 수 없습니다.")
     }
 
     fun defrost() {
