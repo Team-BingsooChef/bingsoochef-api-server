@@ -7,31 +7,31 @@ import java.util.concurrent.TimeUnit
 
 @Component
 class RedisUtil(
-    private val redisTemplate: RedisTemplate<String, String>,
-    private val objectMapper: ObjectMapper
+    val redisTemplate: RedisTemplate<String, String>,
+    val objectMapper: ObjectMapper
 ) {
     companion object {
         const val EMAIL_CERTIFICATION_PREFIX = "email_certification:"
         const val EMAIL_CERTIFICATION_SUCCESS_PREFIX = "email_certification_success:"
     }
 
+    // 데이터 저장
     fun <T> setData(key: String, data: T, timeout: Long, timeUnit: TimeUnit): Boolean {
-        try {
+        return try {
             val value = objectMapper.writeValueAsString(data)
             redisTemplate.opsForValue().set(key, value, timeout, timeUnit)
+            true
         } catch (e: Exception) {
-            return false
+            false
         }
-        return true
     }
 
-    fun <T> getData(key: String, clazz: Class<T>): T? {
+    final inline fun <reified T> getData(key: String): T? {
         val value = redisTemplate.opsForValue().get(key)
-
-        try {
-            return objectMapper.readValue(value, clazz)
+        return try {
+            objectMapper.readValue(value, T::class.java)
         } catch (e: Exception) {
-            return null
+            null
         }
     }
 
@@ -50,5 +50,4 @@ class RedisUtil(
     fun getEmailCertificationSuccessKey(email: String): String {
         return EMAIL_CERTIFICATION_SUCCESS_PREFIX + email
     }
-
 }
