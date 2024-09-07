@@ -30,6 +30,9 @@ class BingsooService(
             .orElseThrow{ NotFoundException("존재하지 않는 사용자입니다.") }
             .bingsoo
 
+        if (bingsoo == null)
+            throw NotFoundException("사용자에게 빙수가 없습니다.")
+
         bingsoo.updateTaste(taste = command.taste)
 
         return bingsoo
