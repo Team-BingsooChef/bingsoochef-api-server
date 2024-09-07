@@ -3,9 +3,13 @@ package bingsoochef.bingsoochef.security.application
 import bingsoochef.bingsoochef.common.exception.BingsooException
 import bingsoochef.bingsoochef.common.exception.code.AuthError
 import bingsoochef.bingsoochef.infra.redis.RedisUtil
+import bingsoochef.bingsoochef.user.domain.AccountType
+import bingsoochef.bingsoochef.user.domain.User
+import bingsoochef.bingsoochef.user.persistence.UserRepository
 import org.springframework.mail.MailException
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.thymeleaf.context.Context
@@ -17,7 +21,9 @@ import java.util.concurrent.TimeUnit
 class AuthenticationService(
     private val redisUtil: RedisUtil,
     private val mailSender: JavaMailSender,
-    private val templateEngine: SpringTemplateEngine
+    private val templateEngine: SpringTemplateEngine,
+    private val passwordEncoder: PasswordEncoder,
+    private val userRepository: UserRepository
 ) {
     companion object {
         private const val EMAIL_CERTIFICATION_EXPIRE_TIME = 5L
@@ -52,6 +58,25 @@ class AuthenticationService(
         saveSuccessCertification(email)
     }
 
+    fun signup(username: String, password: String) {
+        userRepository.findUserByUsername(username)?.let {
+            throw BingsooException(AuthError.EMAIL_DUPLICATED)
+        }
+        println("username: $username")
+        println("password: $password")
+        if (isNotCertified(username)) {
+            throw BingsooException(AuthError.EMAIL_CERTIFICATION_NOT_FOUND)
+        }
+
+        val encodedPassword = passwordEncoder.encode(password)
+        val user = User(
+            username = username,
+            password = encodedPassword,
+            userType = AccountType.LOCAL
+        )
+        userRepository.save(user)
+    }
+
     private fun createHtmlContent(certificationNumber: String): String {
         val context = Context()
         context.setVariable("certificationNumber", certificationNumber)
@@ -70,7 +95,7 @@ class AuthenticationService(
 
     private fun getSecretCode(email: String): String {
         val key = redisUtil.getEmailCertificationKey(email)
-        return redisUtil.getData(key, String::class.java)
+        return redisUtil.getData(key)
             ?: throw BingsooException(AuthError.EMAIL_CERTIFICATION_NOT_FOUND)
 
     }
@@ -82,5 +107,11 @@ class AuthenticationService(
 
     private fun isWrongCode(code: String, request: String): Boolean {
         return !Objects.equals(code, request)
+    }
+
+    private fun isNotCertified(email: String): Boolean {
+        val key = redisUtil.getEmailCertificationSuccessKey(email)
+        val isCertified: Boolean? = redisUtil.getData(key)
+        return isCertified?.let { false } ?: true
     }
 }
