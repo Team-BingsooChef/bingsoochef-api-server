@@ -128,7 +128,7 @@ class ToppingService(
         val topping = toppingRepository.findById(command.toppingId)
             .orElseThrow{ NotFoundException("존재하지 않는 토핑입니다.") }
 
-        validateToppingAccess(user, topping)
+        topping.isReadableBy(user)
 
         if (topping.comment == null)
             return Pair(ToppingInfo.from(topping), null)
@@ -139,15 +139,5 @@ class ToppingService(
         return Pair(ToppingInfo.from(topping), CommentInfo.from(comment))
     }
 
-    private fun validateToppingAccess(user: User, topping: Topping) {
-        // 자신의 빙수가 아님
-        if (user.bingsoo != topping.bingsoo) {
-            // 자신이 작성한 토핑도 아님
-            if (user != topping.chef)
-                throw ForbiddenException("사용자 ${user.userId}은(는) 요청한 토핑에 접근할 수 없습니다.")
-        }
 
-        else (topping.isHidden)
-            throw ForbiddenException("요청한 토핑이 아직 녹지 않았습니다.")
-    }
 }
