@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.security.presentation
 
 import bingsoochef.bingsoochef.security.presentation.req.EmailRequest
+import bingsoochef.bingsoochef.security.presentation.req.SignupRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.parameters.RequestBody
@@ -34,4 +35,13 @@ interface AuthenticationControllerInterface {
         @Parameter(name = "code", description = "이메일 인증 코드입니다.") code: String
     ): ResponseEntity<Void>
 
+    @Operation(summary = "회원가입", description = "회원가입을 진행합니다.")
+    @ApiResponses(
+        value = [
+            ApiResponse(responseCode = "200", description = "회원가입 성공, 성공 시 세부 정보 설정 페이지로 Redirect")
+        ]
+    )
+    fun signup(
+        @RequestBody(required = true, description = "회원가입 기본 정보.") @Valid request: SignupRequest
+    ): ResponseEntity<Void>
 }
