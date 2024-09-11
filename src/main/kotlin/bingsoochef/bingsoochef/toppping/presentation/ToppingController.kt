@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.toppping.presentation
 
-import bingsoochef.bingsoochef.toppping.application.CreateToppingCommand
+import bingsoochef.bingsoochef.toppping.application.GetToppingCommand
+import bingsoochef.bingsoochef.toppping.application.GetToppingPageCommand
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
 import bingsoochef.bingsoochef.toppping.application.ToppingService
 import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
@@ -35,13 +36,28 @@ class ToppingController(
     override fun getToppingPage(
         @RequestParam(value = "b") bingsooId: Long,
         @PageableDefault(page = 0, size = 8) pageable: Pageable ): ResponseEntity<ToppingPageResponse> {
-        TODO()
+
+        //TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val getToppingPageCommand = GetToppingPageCommand(bingsooId, pageable)
+
+        val toppingPageInfo = toppingService.getToppingPage(getToppingPageCommand)
+
+        val toppingPageResponse = ToppingPageResponse.from(toppingPageInfo)
+        return ResponseEntity.status(HttpStatus.OK).body(toppingPageResponse)
     }
 
     @GetMapping("/{topping-id}")
     override fun getTopping(@PathVariable(value = "topping-id") toppingId: Long,
                             @RequestParam(value = "user-id") userId: Long): ResponseEntity<ToppingResponse> {
-        TODO()
+
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val getToppingCommand = GetToppingCommand(userId, toppingId)
+
+        val (toppingInfo, commentInfo) = toppingService.getTopping(getToppingCommand)
+
+        val toppingResponse = ToppingResponse.of(toppingInfo, commentInfo)
+
+        return ResponseEntity.status(HttpStatus.OK).body(toppingResponse)
     }
 
     @GetMapping("/{topping-id}/quiz")

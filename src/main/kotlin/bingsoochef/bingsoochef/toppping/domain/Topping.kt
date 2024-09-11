@@ -1,6 +1,7 @@
 package bingsoochef.bingsoochef.toppping.domain
 
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
+import bingsoochef.bingsoochef.global.error.ForbiddenException
 import bingsoochef.bingsoochef.user.domain.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -38,9 +39,29 @@ class Topping(
     var position: Long,
     @Column(name = "topping_created_time")
     var createdTime: LocalDateTime,
-    var isHiden: Boolean
+    var isHidden: Boolean
 
 ) {
+    fun isReadableBy(user: User) {
+        // 셰프인 경우: 항상 접근 가능
+        if (chef == user)
+            return
+
+        // 손님인 경우: 녹은 토핑에만 접근 가능
+        if (user.bingsoo == bingsoo) {
+            if (isHidden)
+                throw ForbiddenException("요청한 토핑이 아직 녹지 않았습니다.")
+            return
+        }
+
+        // 셰프도 손님도 아닌 경우: 항상 접근 불가
+        throw ForbiddenException("사용자 ${user.userId}은(는) 요청한 토핑에 접근할 수 없습니다.")
+    }
+
+    fun defrost() {
+        isHidden = false
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is Topping) return false
         if (this === other) return true
