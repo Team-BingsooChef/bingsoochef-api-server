@@ -24,5 +24,14 @@ class User(
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "bingsoo_id", unique = true)
-    var bingsoo: Bingsoo
-)
+    var bingsoo: Bingsoo? = null
+
+) {
+    constructor(username: String, password: String, userType: AccountType) : this(
+        null,
+        username,
+        password,
+        null,
+        userType
+    )
+}
