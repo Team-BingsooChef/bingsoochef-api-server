@@ -6,6 +6,7 @@ import bingsoochef.bingsoochef.infra.redis.RedisUtil
 import bingsoochef.bingsoochef.user.domain.AccountType
 import bingsoochef.bingsoochef.user.domain.User
 import bingsoochef.bingsoochef.user.persistence.UserRepository
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.mail.MailException
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -16,6 +17,8 @@ import org.thymeleaf.context.Context
 import org.thymeleaf.spring6.SpringTemplateEngine
 import java.util.*
 import java.util.concurrent.TimeUnit
+
+private val logger = KotlinLogging.logger {}
 
 @Service
 class AuthenticationService(
@@ -43,7 +46,6 @@ class AuthenticationService(
             helper.setText(htmlContent, true)
             mailSender.send(message)
         } catch (e: MailException) {
-            print(e.message)
             throw BingsooException(AuthError.EMAIL_SEND_FAILED)
         }
         saveSecretCode(email, certificationNumber)
@@ -62,8 +64,6 @@ class AuthenticationService(
         userRepository.findUserByUsername(username)?.let {
             throw BingsooException(AuthError.EMAIL_DUPLICATED)
         }
-        println("username: $username")
-        println("password: $password")
         if (isNotCertified(username)) {
             throw BingsooException(AuthError.EMAIL_CERTIFICATION_NOT_FOUND)
         }
