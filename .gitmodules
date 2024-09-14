@@ -1,0 +1,3 @@
+[submodule "src/main/resources/secrete"]
+	path = src/main/resources/secrete
+	url = https://github.com/Team-BingsooChef/bingsoochef-secrete-resources.git
