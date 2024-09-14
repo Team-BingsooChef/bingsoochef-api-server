@@ -1,0 +1,44 @@
+package bingsoochef.bingsoochef.security.presentation
+
+import bingsoochef.bingsoochef.security.application.AuthenticationService
+import bingsoochef.bingsoochef.security.presentation.req.EmailRequest
+import bingsoochef.bingsoochef.security.presentation.req.SignupRequest
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+
+@RestController
+@RequestMapping("/auth")
+class AuthenticationController(
+    private val authenticationService: AuthenticationService
+) : AuthenticationControllerInterface {
+
+    @PostMapping("/email")
+    override fun authenticateEmail(
+        @RequestBody request: EmailRequest
+    ): ResponseEntity<Void> {
+        authenticationService.sendMail(request.email)
+
+        return ResponseEntity.ok()
+            .build()
+    }
+
+    @PostMapping("/email/verify")
+    override fun verifyEmailCode(
+        @RequestBody request: EmailRequest,
+        @RequestParam code: String
+    ): ResponseEntity<Void> {
+        authenticationService.verifyEmailCode(request.email, code)
+        return ResponseEntity.ok()
+            .build()
+    }
+
+    @PostMapping("/signup")
+    override fun signup(
+        @RequestBody request: SignupRequest
+    ): ResponseEntity<Void> {
+
+        authenticationService.signup(request.username, request.password)
+        return ResponseEntity.ok()
+            .build()
+    }
+}
