@@ -3,7 +3,6 @@ package bingsoochef.bingsoochef.toppping.application
 import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.common.exception.BingsooException
 import bingsoochef.bingsoochef.common.exception.code.ToppingError
-import bingsoochef.bingsoochef.global.error.ForbiddenException
 import bingsoochef.bingsoochef.global.error.NotFoundException
 import bingsoochef.bingsoochef.toppping.application.dto.CommentInfo
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo

@@ -2,7 +2,8 @@ package bingsoochef.bingsoochef.topping.application
 
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
 import bingsoochef.bingsoochef.bingsoo.domain.Taste
-import bingsoochef.bingsoochef.global.error.ForbiddenException
+import bingsoochef.bingsoochef.common.exception.BingsooException
+import bingsoochef.bingsoochef.common.exception.code.ToppingError
 import bingsoochef.bingsoochef.toppping.domain.Topping
 import bingsoochef.bingsoochef.toppping.domain.ToppingType
 import bingsoochef.bingsoochef.user.domain.User
@@ -24,9 +25,9 @@ class ToppingAccessTest : FunSpec({
     beforeSpec {
         bingsoo = Bingsoo(0L, Taste.STRAWBERRY)
 
-        customer = User(0L, bingsoo)
-        chef = User(0L, null)
-        other = User(0L, null)
+//        customer = User(0L, bingsoo)
+//        chef = User(0L, null)
+//        other = User(0L, null)
 
         topping = Topping(
             id = 0L,
@@ -50,23 +51,23 @@ class ToppingAccessTest : FunSpec({
         }
 
         test("손님이 접근하면 403 - 빙수가 얼어 있음 예외가 발생한다") {
-            val exception = shouldThrow<ForbiddenException> {
+            val exception = shouldThrow<BingsooException> {
                 topping.isReadableBy(customer)
             }
-            exception.message shouldContain "요청한 토핑이 아직 녹지 않았습니다."
+            exception.errorCode shouldBe ToppingError.TOPPING_UNFROZEN
         }
 
         test("셰프는 접근할 수 있다.") {
-            shouldNotThrow<ForbiddenException> {
+            shouldNotThrow<BingsooException> {
                 topping.isReadableBy(chef)
             }
         }
 
         test("제 3자가 접근하면 403 - 권한 없음 예외가 발생한다") {
-            val exception = shouldThrow<ForbiddenException> {
+            val exception = shouldThrow<BingsooException> {
                 topping.isReadableBy(other)
             }
-            exception.message shouldContain "사용자 ${other.userId}은(는) 요청한 토핑에 접근할 수 없습니다."
+            exception.errorCode shouldBe ToppingError.TOPPING_FORBIDDEN
         }
     }
 
@@ -78,22 +79,22 @@ class ToppingAccessTest : FunSpec({
         }
 
         test("손님은 접근할 수 있다.") {
-            shouldNotThrow<ForbiddenException> {
+            shouldNotThrow<BingsooException> {
                 topping.isReadableBy(customer)
             }
         }
 
         test("셰프는 접근할 수 있다.다") {
-            shouldNotThrow<ForbiddenException     > {
+            shouldNotThrow<BingsooException> {
                 topping.isReadableBy(chef)
             }
         }
 
         test("제 3자가 접근하면 403 - 권한 없음 예외가 발생한다") {
-            val exception = shouldThrow<ForbiddenException> {
+            val exception = shouldThrow<BingsooException> {
                 topping.isReadableBy(other)
             }
-            exception.message shouldContain "사용자 ${other.userId}은(는) 요청한 토핑에 접근할 수 없습니다."
+            exception.errorCode shouldBe ToppingError.TOPPING_FORBIDDEN
         }
     }
 })

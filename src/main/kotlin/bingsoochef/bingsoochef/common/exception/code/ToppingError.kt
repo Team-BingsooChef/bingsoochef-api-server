@@ -26,7 +26,8 @@ enum class ToppingError(
     FORBIDDEN(HttpStatus.FORBIDDEN, "T300", "권한이 없습니다."),
     TOPPING_FORBIDDEN(HttpStatus.FORBIDDEN, "T301", "토핑에 대한 권한이 없습니다."),
     COMMENT_FORBIDDEN(HttpStatus.FORBIDDEN, "T302", "코멘트에 대한 권한이 없습니다."),
-    QUIZ_FORBIDDEN(HttpStatus.FORBIDDEN, "T303", "퀴즈에 대한 권한이 없습니다.");
+    QUIZ_FORBIDDEN(HttpStatus.FORBIDDEN, "T303", "퀴즈에 대한 권한이 없습니다."),
+    TOPPING_UNFROZEN(HttpStatus.FORBIDDEN, "T304", "요청한 토핑이 아직 녹지 않았습니다.");
 
     override fun httpStatus(): HttpStatus {
         return httpStatus
