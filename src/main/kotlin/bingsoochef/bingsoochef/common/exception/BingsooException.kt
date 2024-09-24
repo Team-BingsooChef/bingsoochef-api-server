@@ -4,7 +4,8 @@ import bingsoochef.bingsoochef.common.exception.code.ErrorCode
 import org.springframework.http.HttpStatus
 
 class BingsooException(
-    val errorCode: ErrorCode
+    val errorCode: ErrorCode,
+    val detail: String? = null
 ) : RuntimeException(errorCode.message()) {
 
     fun httpStatus(): HttpStatus {
