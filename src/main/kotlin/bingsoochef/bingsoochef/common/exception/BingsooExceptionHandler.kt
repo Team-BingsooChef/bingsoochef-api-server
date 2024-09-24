@@ -9,7 +9,10 @@ class BingsooExceptionHandler {
 
     @ExceptionHandler(BingsooException::class)
     fun handleBingsooException(e: BingsooException): ProblemDetail {
-        val problemDetail = ProblemDetail.forStatusAndDetail(e.httpStatus(), e.message())
+
+        val problemDetail = ProblemDetail.forStatus(e.httpStatus())
+        problemDetail.title = e.message
+        problemDetail.detail = e.detail
         
         return problemDetail
     }
