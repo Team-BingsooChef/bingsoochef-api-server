@@ -15,8 +15,9 @@ enum class ToppingError(
 
     NOT_FOUND(HttpStatus.NOT_FOUND, "T100", "존재하지 않는 자원입니다."),
     TOPPING_NOT_FOUND(HttpStatus.NOT_FOUND, "T101", "존재하지 않는 토핑입니다."),
-    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "T101", "존재하지 않는 토핑입니다."),
-    QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "T101", "존재하지 않는 퀴즈입니다."),
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "T102", "존재하지 않는 토핑입니다."),
+    QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "T103", "존재하지 않는 퀴즈입니다."),
+    TOPPING_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "T104", "존재하지 않는 토핑 유형입니다."),
 
     DUPLICATE(HttpStatus.CONFLICT, "T200", "이미 존재하는 자원입니다."),
     TOPPING_DUPLICATE(HttpStatus.CONFLICT, "T201", "이미 토핑이 존재합니다."),
