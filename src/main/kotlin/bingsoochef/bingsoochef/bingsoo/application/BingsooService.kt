@@ -5,7 +5,6 @@ import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.common.exception.BingsooException
 import bingsoochef.bingsoochef.common.exception.code.BingsooError
 import bingsoochef.bingsoochef.common.exception.code.UserError
-import bingsoochef.bingsoochef.global.error.NotFoundException
 import bingsoochef.bingsoochef.user.domain.User
 import bingsoochef.bingsoochef.user.persistence.UserRepository
 import org.springframework.stereotype.Service
