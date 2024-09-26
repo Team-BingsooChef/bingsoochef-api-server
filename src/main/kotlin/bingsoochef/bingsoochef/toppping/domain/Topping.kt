@@ -1,7 +1,8 @@
 package bingsoochef.bingsoochef.toppping.domain
 
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
-import bingsoochef.bingsoochef.global.error.ForbiddenException
+import bingsoochef.bingsoochef.common.exception.BingsooException
+import bingsoochef.bingsoochef.common.exception.code.ToppingError
 import bingsoochef.bingsoochef.user.domain.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -50,12 +51,12 @@ class Topping(
         // 손님인 경우: 녹은 토핑에만 접근 가능
         if (user.bingsoo == bingsoo) {
             if (isHidden)
-                throw ForbiddenException("요청한 토핑이 아직 녹지 않았습니다.")
+                throw BingsooException(ToppingError.TOPPING_UNFROZEN)
             return
         }
 
         // 셰프도 손님도 아닌 경우: 항상 접근 불가
-        throw ForbiddenException("사용자 ${user.userId}은(는) 요청한 토핑에 접근할 수 없습니다.")
+        throw BingsooException(ToppingError.TOPPING_FORBIDDEN, "사용자 ${user.userId}은(는) 요청한 토핑에 접근할 수 없습니다.")
     }
 
     fun defrost() {
