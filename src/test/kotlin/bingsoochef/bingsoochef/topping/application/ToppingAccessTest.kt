@@ -6,12 +6,12 @@ import bingsoochef.bingsoochef.common.exception.BingsooException
 import bingsoochef.bingsoochef.common.exception.code.ToppingError
 import bingsoochef.bingsoochef.toppping.domain.Topping
 import bingsoochef.bingsoochef.toppping.domain.ToppingType
+import bingsoochef.bingsoochef.user.domain.AccountType
 import bingsoochef.bingsoochef.user.domain.User
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldContain
 import java.time.LocalDateTime
 
 class ToppingAccessTest : FunSpec({
@@ -25,9 +25,9 @@ class ToppingAccessTest : FunSpec({
     beforeSpec {
         bingsoo = Bingsoo(0L, Taste.STRAWBERRY)
 
-//        customer = User(0L, bingsoo)
-//        chef = User(0L, null)
-//        other = User(0L, null)
+        customer = User(0L, "customer", "pass", "customer", AccountType.GOOGLE, bingsoo)
+        chef = User(1L, "chef", "pass", "chef", AccountType.GOOGLE, null)
+        other = User(2L, "other", "pass", "other", AccountType.GOOGLE, null)
 
         topping = Topping(
             id = 0L,
