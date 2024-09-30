@@ -25,14 +25,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Create app.yml
-        run: |
-          mkdir -p ./src/main/resources
-          touch ./src/main/resources/application.yml
-          touch ./src/main/resources/application-dev.yml
-          echo "${{ secrets.APPLICATION }}" >> ./src/main/resources/application.yml
-          echo "${{ secrets.APPLICATION_DEV }}" >> ./src/main/resources/application-dev.yml
-
       - name: Grant permission to gradlew
         run: chmod +x ./gradlew
 
@@ -66,4 +58,25 @@ jobs:
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q) 
             docker pull wgwjh05169/bingsoochef
-            docker run -d -p 8080:8080 --name bingsoochef-api-server wgwjh05169/bingsoochef
+            docker run -d -p 8080:8080 \
+            --name bingsoochef-api-server wgwjh05169/bingsoochef \
+            -e SECURITY_AUTH_URL=${{ secrets.SECURITY_AUTH_URL }} \
+            -e SECURITY_OAUTH_AUTH_URL=${{ secrets.SECURITY_OAUTH_AUTH_URL }} \
+            -e SECURITY_OAUTH_REDIRECT_URL=${{ secrets.SECURITY_OAUTH_REDIRECT_URL }} \
+            -e SECURITY_LOGIN_URL=${{ secrets.SECURITY_LOGIN_URL }} \
+            -e SECURITY_SWAGGER_URL=${{ secrets.SECURITY_SWAGGER_URL }} \
+            -e MYSQL_URL=${{ secrets.MYSQL_URL }} \
+            -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
+            -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+            -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
+            -e REDIS_DATABASE=${{ secrets.REDIS_DATABASE }} \
+            -e SMTP_USERNAME=${{ secrets.SMTP_USERNAME }} \
+            -e SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} \
+            -e GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
+            -e GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
+            -e GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} \
+            -e NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} \
+            -e NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} \
+            -e NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }} \
+            -e NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}
