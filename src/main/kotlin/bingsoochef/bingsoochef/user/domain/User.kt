@@ -3,7 +3,7 @@ package bingsoochef.bingsoochef.user.domain
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
 import jakarta.persistence.*
 
-@Table(name = "user")
+@Table(name = "users")
 @Entity
 class User(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
