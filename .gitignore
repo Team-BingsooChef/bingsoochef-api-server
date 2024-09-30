@@ -39,8 +39,5 @@ out/
 ### Kotlin ###
 .kotlin
 
-### Yaml ###
-*.yml
-*.properties
-
+.env
 *.pem
