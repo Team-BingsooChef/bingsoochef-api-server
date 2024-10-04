@@ -12,6 +12,7 @@ spring:
       database: ${REDIS_DATABASE}
 
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     defer-datasource-initialization: true
