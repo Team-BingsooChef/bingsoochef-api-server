@@ -25,14 +25,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Create app.yml
-        run: |
-          mkdir -p ./src/main/resources
-          touch ./src/main/resources/application.yml
-          touch ./src/main/resources/application-dev.yml
-          echo "${{ secrets.APPLICATION }}" >> ./src/main/resources/application.yml
-          echo "${{ secrets.APPLICATION_DEV }}" >> ./src/main/resources/application-dev.yml
-
       - name: Grant permission to gradlew
         run: chmod +x ./gradlew
 
@@ -63,7 +55,14 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            echo "${{ secrets.ENV }}" > .env
+            
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q) 
+            
             docker pull wgwjh05169/bingsoochef
-            docker run -d -p 8080:8080 --name bingsoochef-api-server wgwjh05169/bingsoochef
+            docker run -d -p 8080:8080 \
+            --name bingsoochef-api-server wgwjh05169/bingsoochef \
+            --env-file .env
+            
+            rm -f .env
