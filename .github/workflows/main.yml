@@ -55,6 +55,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            rm -f .env
             echo "${{ secrets.ENV }}" > .env
             
             docker stop $(docker ps -a -q) 
@@ -64,5 +65,3 @@ jobs:
             docker run -d -p 8080:8080 \
             --name bingsoochef-api-server wgwjh05169/bingsoochef \
             --env-file .env
-            
-            rm -f .env
