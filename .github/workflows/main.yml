@@ -55,28 +55,14 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            echo "${{ secrets.ENV }}" > .env
+            
             docker stop $(docker ps -a -q) 
             docker rm $(docker ps -a -q) 
+            
             docker pull wgwjh05169/bingsoochef
             docker run -d -p 8080:8080 \
             --name bingsoochef-api-server wgwjh05169/bingsoochef \
-            -e SECURITY_AUTH_URL=${{ secrets.SECURITY_AUTH_URL }} \
-            -e SECURITY_OAUTH_AUTH_URL=${{ secrets.SECURITY_OAUTH_AUTH_URL }} \
-            -e SECURITY_OAUTH_REDIRECT_URL=${{ secrets.SECURITY_OAUTH_REDIRECT_URL }} \
-            -e SECURITY_LOGIN_URL=${{ secrets.SECURITY_LOGIN_URL }} \
-            -e SECURITY_SWAGGER_URL=${{ secrets.SECURITY_SWAGGER_URL }} \
-            -e MYSQL_URL=${{ secrets.MYSQL_URL }} \
-            -e MYSQL_USERNAME=${{ secrets.MYSQL_USERNAME }} \
-            -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
-            -e REDIS_PORT=${{ secrets.REDIS_PORT }} \
-            -e REDIS_DATABASE=${{ secrets.REDIS_DATABASE }} \
-            -e SMTP_USERNAME=${{ secrets.SMTP_USERNAME }} \
-            -e SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }} \
-            -e GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }} \
-            -e GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }} \
-            -e GOOGLE_REDIRECT_URI=${{ secrets.GOOGLE_REDIRECT_URI }} \
-            -e NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} \
-            -e NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} \
-            -e NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }} \
-            -e NAVER_REDIRECT_URI=${{ secrets.NAVER_REDIRECT_URI }}
+            --env-file .env
+            
+            rm -f .env
