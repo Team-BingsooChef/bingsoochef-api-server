@@ -32,7 +32,7 @@ jobs:
         run: ./gradlew clean build
 
       - name: Build docker image
-        run: docker build --build-arg DEPENDENCY=build/dependency -t wgwjh05169/bingsoochef .
+        run: docker build -t wgwjh05169/bingsoochef .
 
       - name: Login docker hub
         uses: docker/login-action@v2
@@ -63,5 +63,6 @@ jobs:
             
             docker pull wgwjh05169/bingsoochef
             docker run -d -p 8080:8080 \
-            --name bingsoochef-api-server wgwjh05169/bingsoochef \
-            --env-file .env
+            --name bingsoochef-api-server \
+            --env-file ./.env \
+            wgwjh05169/bingsoochef
