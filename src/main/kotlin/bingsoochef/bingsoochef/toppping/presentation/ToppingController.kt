@@ -79,6 +79,12 @@ class ToppingController(
 
     @PostMapping("/comments")
     override fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
-        TODO()
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val command = request.toCommand(request.userId)
+
+        val (toppinfInfo, commentInfo) = toppingService.registerComment(command)
+        val response = ToppingResponse.of(toppinfInfo, commentInfo)
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }
 }
