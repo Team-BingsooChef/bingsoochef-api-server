@@ -33,6 +33,17 @@ class Quiz(
         throw BingsooException(ToppingError.QUIZ_FORBIDDEN)
     }
 
+    fun isTryableBy(user: User) {
+        if (user.bingsoo == topping.bingsoo) {
+            if (!topping.isHidden)
+                throw BingsooException(ToppingError.TOPPING_DEFROSTED)
+
+            return
+        }
+
+        throw BingsooException(ToppingError.QUIZ_FORBIDDEN)
+    }
+    
     override fun equals(other: Any?): Boolean {
         if (other !is Topping) return false
         if (this === other) return true
