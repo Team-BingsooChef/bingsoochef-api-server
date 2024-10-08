@@ -149,12 +149,7 @@ class ToppingService(
         val user = userRepository.findById(userId)
             .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
 
-        val topping = toppingRepository.findById(toppingId)
-            .orElseThrow{ BingsooException(ToppingError.TOPPING_NOT_FOUND) }
-
-        topping.isReadableBy(user)
-
-        val quiz = quizRepository.findByTopping(topping)
+        val quiz = quizRepository.findByToppingId(toppingId)
             .orElseThrow{ BingsooException(ToppingError.QUIZ_NOT_FOUND) }
         val questions = questionRepository.findAllByQuiz(quiz)
 
