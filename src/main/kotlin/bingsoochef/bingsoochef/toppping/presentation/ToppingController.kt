@@ -37,7 +37,6 @@ class ToppingController(
         @RequestParam(value = "b") bingsooId: Long,
         @PageableDefault(page = 0, size = 8) pageable: Pageable ): ResponseEntity<ToppingPageResponse> {
 
-        //TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
         val getToppingPageCommand = GetToppingPageCommand(bingsooId, pageable)
 
         val toppingPageInfo = toppingService.getToppingPage(getToppingPageCommand)
