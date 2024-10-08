@@ -62,8 +62,8 @@ class ToppingController(
     @GetMapping("/{topping-id}/quiz")
     override fun getQuiz(@PathVariable(value = "topping-id") toppingId: Long,
                          @RequestParam(value = "user-id") userId: Long): ResponseEntity<QuizResponse> {
-        val info = toppingService.getQuiz(userId, toppingId)
-        val response = QuizResponse.from(info)
+        val (quizInfo, questionsInfo) = toppingService.getQuiz(userId, toppingId)
+        val response = QuizResponse.of(quizInfo, questionsInfo)
 
         return ResponseEntity.status(HttpStatus.OK).body(response)
     }
