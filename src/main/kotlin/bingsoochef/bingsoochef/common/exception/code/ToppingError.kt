@@ -17,18 +17,19 @@ enum class ToppingError(
     TOPPING_NOT_FOUND(HttpStatus.NOT_FOUND, "T101", "존재하지 않는 토핑입니다."),
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "T102", "존재하지 않는 코멘트입니다."),
     QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "T103", "존재하지 않는 퀴즈입니다."),
+    QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "T103", "존재하지 않는 선지입니다."),
     TOPPING_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "T104", "존재하지 않는 토핑 유형입니다."),
 
     DUPLICATE(HttpStatus.CONFLICT, "T200", "이미 존재하는 자원입니다."),
     TOPPING_DUPLICATE(HttpStatus.CONFLICT, "T201", "이미 토핑이 존재합니다."),
     COMMENT_DUPLICATE(HttpStatus.CONFLICT, "T202", "이미 코멘트가 존재합니다."),
-    QUIZ_DUPLICATE(HttpStatus.CONFLICT, "T203", "이미 푼 퀴즈입니다."),
 
     FORBIDDEN(HttpStatus.FORBIDDEN, "T300", "권한이 없습니다."),
     TOPPING_FORBIDDEN(HttpStatus.FORBIDDEN, "T301", "토핑에 대한 권한이 없습니다."),
     COMMENT_FORBIDDEN(HttpStatus.FORBIDDEN, "T302", "코멘트에 대한 권한이 없습니다."),
     QUIZ_FORBIDDEN(HttpStatus.FORBIDDEN, "T303", "퀴즈에 대한 권한이 없습니다."),
-    TOPPING_UNFROZEN(HttpStatus.FORBIDDEN, "T304", "요청한 토핑이 아직 녹지 않았습니다.");
+    TOPPING_UNFROZEN(HttpStatus.FORBIDDEN, "T304", "요청한 토핑이 아직 녹지 않았습니다."),
+    TOPPING_DEFROSTED(HttpStatus.FORBIDDEN, "T401", "이미 녹은 토핑입니다."),;
 
     override fun httpStatus(): HttpStatus {
         return httpStatus
