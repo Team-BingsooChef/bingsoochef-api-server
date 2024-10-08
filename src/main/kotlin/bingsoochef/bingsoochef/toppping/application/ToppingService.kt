@@ -6,6 +6,7 @@ import bingsoochef.bingsoochef.common.exception.code.BingsooError
 import bingsoochef.bingsoochef.common.exception.code.ToppingError
 import bingsoochef.bingsoochef.common.exception.code.UserError
 import bingsoochef.bingsoochef.toppping.application.dto.CommentInfo
+import bingsoochef.bingsoochef.toppping.application.dto.QuizInfo
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingPageInfo
 import bingsoochef.bingsoochef.toppping.domain.Question
@@ -139,5 +140,21 @@ class ToppingService(
         return Pair(ToppingInfo.from(topping), CommentInfo.from(comment))
     }
 
+    @Transactional(readOnly = true)
+    fun getQuiz(userId: Long, toppingId: Long): QuizInfo {
 
+        val user = userRepository.findById(userId)
+            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+
+        val topping = toppingRepository.findById(toppingId)
+            .orElseThrow{ BingsooException(ToppingError.TOPPING_NOT_FOUND) }
+
+        topping.isReadableBy(user)
+
+        val quiz = quizRepository.findByTopping(topping)
+            .orElseThrow{ BingsooException(ToppingError.QUIZ_NOT_FOUND) }
+        val questions = questionRepository.findAllByQuiz(quiz)
+
+        return QuizInfo.of(quiz, questions)
+    }
 }
