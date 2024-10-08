@@ -138,7 +138,7 @@ class ToppingService(
     }
 
     @Transactional(readOnly = true)
-    fun getQuiz(userId: Long, toppingId: Long): QuizInfo {
+    fun getQuiz(userId: Long, toppingId: Long): Pair<QuizInfo, List<QuestionInfo>> {
 
         val user = userRepository.findById(userId)
             .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
@@ -150,7 +150,7 @@ class ToppingService(
 
         val questions = questionRepository.findAllByQuiz(quiz)
 
-        return QuizInfo.of(quiz, questions)
+        return Pair(QuizInfo.from(quiz), questions.map { QuestionInfo.from(it) })
     }
 
     fun tryQuiz(userId: Long, quizId: Long, questionId: Long): TryResultInfo {
