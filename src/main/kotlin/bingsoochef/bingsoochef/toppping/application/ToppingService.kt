@@ -151,6 +151,9 @@ class ToppingService(
 
         val quiz = quizRepository.findByToppingId(toppingId)
             .orElseThrow{ BingsooException(ToppingError.QUIZ_NOT_FOUND) }
+
+        quiz.isReadableBy(user)
+
         val questions = questionRepository.findAllByQuiz(quiz)
 
         return QuizInfo.of(quiz, questions)

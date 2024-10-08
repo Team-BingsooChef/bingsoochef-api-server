@@ -1,5 +1,8 @@
 package bingsoochef.bingsoochef.toppping.domain
 
+import bingsoochef.bingsoochef.common.exception.BingsooException
+import bingsoochef.bingsoochef.common.exception.code.ToppingError
+import bingsoochef.bingsoochef.user.domain.User
 import jakarta.persistence.*
 
 @Table(name = "quiz")
@@ -19,6 +22,13 @@ class Quiz(
     var quizType: QuizType,
     var wrongCount: Short = 0
 ) {
+    fun isReadableBy(user: User) {
+        if (topping.chef == user || user.bingsoo == topping.bingsoo)
+            return
+
+        throw BingsooException(ToppingError.QUIZ_FORBIDDEN)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (other !is Topping) return false
         if (this === other) return true
