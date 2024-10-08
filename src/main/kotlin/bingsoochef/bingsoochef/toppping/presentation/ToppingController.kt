@@ -70,7 +70,7 @@ class ToppingController(
 
     @PostMapping("/quiz")
     override fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
-// TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
         val info = toppingService.tryQuiz(request.userId, request.quizId, request.questionId)
         val response = TryResultResponse.from(info)
 
