@@ -1,6 +1,6 @@
 package bingsoochef.bingsoochef.topping.application
 
-import bingsoochef.bingsoochef.toppping.application.GetToppingPageCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingPageCommand
 import bingsoochef.bingsoochef.toppping.application.ToppingService
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingPageInfo
 import io.github.oshai.kotlinlogging.KotlinLogging

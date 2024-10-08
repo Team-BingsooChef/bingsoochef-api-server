@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.application
+package bingsoochef.bingsoochef.toppping.application.command
 
 data class GetToppingCommand(
     val userId: Long,

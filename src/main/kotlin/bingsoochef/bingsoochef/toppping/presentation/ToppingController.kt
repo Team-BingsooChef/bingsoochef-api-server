@@ -1,7 +1,7 @@
 package bingsoochef.bingsoochef.toppping.presentation
 
-import bingsoochef.bingsoochef.toppping.application.GetToppingCommand
-import bingsoochef.bingsoochef.toppping.application.GetToppingPageCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingPageCommand
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
 import bingsoochef.bingsoochef.toppping.application.ToppingService
 import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest

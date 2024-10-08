@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.application
+package bingsoochef.bingsoochef.toppping.application.command
 
 import bingsoochef.bingsoochef.toppping.domain.QuizType
 
