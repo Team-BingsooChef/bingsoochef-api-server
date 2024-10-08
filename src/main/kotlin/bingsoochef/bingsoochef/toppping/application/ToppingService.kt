@@ -8,11 +8,9 @@ import bingsoochef.bingsoochef.common.exception.code.UserError
 import bingsoochef.bingsoochef.toppping.application.command.CreateToppingCommand
 import bingsoochef.bingsoochef.toppping.application.command.GetToppingCommand
 import bingsoochef.bingsoochef.toppping.application.command.GetToppingPageCommand
+import bingsoochef.bingsoochef.toppping.application.command.RegisterCommentCommand
 import bingsoochef.bingsoochef.toppping.application.dto.*
-import bingsoochef.bingsoochef.toppping.domain.Question
-import bingsoochef.bingsoochef.toppping.domain.Quiz
-import bingsoochef.bingsoochef.toppping.domain.QuizType
-import bingsoochef.bingsoochef.toppping.domain.Topping
+import bingsoochef.bingsoochef.toppping.domain.*
 import bingsoochef.bingsoochef.toppping.persistence.*
 import bingsoochef.bingsoochef.user.persistence.UserRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -172,5 +170,27 @@ class ToppingService(
         }
 
         return TryResultInfo.of(result, quiz)
+    }
+
+    fun registerComment(command: RegisterCommentCommand): Pair<ToppingInfo, CommentInfo> {
+
+        val user = userRepository.findById(command.userId)
+            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+        val topping = toppingRepository.findById(command.toppingId)
+            .orElseThrow{ BingsooException(ToppingError.TOPPING_NOT_FOUND) }
+
+        topping.isReadableBy(user)
+        if (topping.comment != null)
+            throw BingsooException(ToppingError.COMMENT_DUPLICATE)
+
+        val comment = Comment(
+            content = command.commentContent,
+            createdTime = LocalDateTime.now()
+        )
+        topping.comment = comment
+
+        commentRepository.save(comment)
+
+        return Pair(ToppingInfo.from(topping), CommentInfo.from(comment))
     }
 }
