@@ -134,10 +134,7 @@ class ToppingService(
         if (topping.comment == null)
             return Pair(ToppingInfo.from(topping), null)
 
-        val comment = commentRepository.findById(topping.comment!!.id!!)
-            .orElseThrow{ BingsooException(ToppingError.COMMENT_NOT_FOUND) }
-
-        return Pair(ToppingInfo.from(topping), CommentInfo.from(comment))
+        return Pair(ToppingInfo.from(topping), CommentInfo.from(topping.comment!!))
     }
 
     @Transactional(readOnly = true)
