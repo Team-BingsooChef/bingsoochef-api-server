@@ -8,10 +8,7 @@ import bingsoochef.bingsoochef.common.exception.code.UserError
 import bingsoochef.bingsoochef.toppping.application.command.CreateToppingCommand
 import bingsoochef.bingsoochef.toppping.application.command.GetToppingCommand
 import bingsoochef.bingsoochef.toppping.application.command.GetToppingPageCommand
-import bingsoochef.bingsoochef.toppping.application.dto.CommentInfo
-import bingsoochef.bingsoochef.toppping.application.dto.QuizInfo
-import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
-import bingsoochef.bingsoochef.toppping.application.dto.ToppingPageInfo
+import bingsoochef.bingsoochef.toppping.application.dto.*
 import bingsoochef.bingsoochef.toppping.domain.Question
 import bingsoochef.bingsoochef.toppping.domain.Quiz
 import bingsoochef.bingsoochef.toppping.domain.QuizType
@@ -157,5 +154,26 @@ class ToppingService(
         val questions = questionRepository.findAllByQuiz(quiz)
 
         return QuizInfo.of(quiz, questions)
+    }
+
+    fun tryQuiz(userId: Long, quizId: Long, questionId: Long): TryResultInfo {
+
+        val user = userRepository.findById(userId)
+            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+        val quiz = quizRepository.findById(quizId)
+            .orElseThrow{ BingsooException(ToppingError.QUIZ_NOT_FOUND) }
+
+        quiz.isTryableBy(user)
+
+        val question = questionRepository.findById(questionId)
+            .orElseThrow{ BingsooException(ToppingError.QUESTION_NOT_FOUND) }
+
+        val result: Boolean = question.isAnswer
+        when (result) {
+            true -> quiz.topping.defrost()
+            false -> quiz.getQuizWrong()
+        }
+
+        return TryResultInfo.of(result, quiz)
     }
 }
