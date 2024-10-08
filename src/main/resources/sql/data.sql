@@ -57,3 +57,19 @@ VALUES
     (13, 2, 4, 12, null, '셰프2', '제목2', '본문2', 2, now(), false),
     (14, 2, 5, 10, null, '셰프3', '제목3', '본문3', 3, now(), false);
 
+INSERT INTO
+    quiz(quiz_id, quiz_type, quiz_title, topping_id, wrong_count)
+VALUES 
+    (1, 'OX', '오엑스 퀴즈입니다', 1, 0),
+    (2, 'MULTIPLE_CHOICE', '다지선다 퀴즈입니다', 2, 0);
+
+INSERT INTO
+    question(question_id, quiz_id, question_content, is_answer)
+VALUES
+    (1, 1, 'O', true),
+    (2, 1, 'X', false),
+    (3, 2, '선지 1번', false),
+    (4, 2, '선지 2번', false),
+    (5, 2, '선지 3번', true),
+    (6, 2, '선지 4번', false);
+
