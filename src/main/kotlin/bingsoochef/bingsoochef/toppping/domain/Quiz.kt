@@ -22,6 +22,10 @@ class Quiz(
     var quizType: QuizType,
     var wrongCount: Short = 0
 ) {
+    fun getQuizWrong() {
+        wrongCount++
+    }
+
     fun isReadableBy(user: User) {
         if (topping.chef == user || user.bingsoo == topping.bingsoo)
             return
