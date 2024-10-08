@@ -42,8 +42,8 @@ VALUES
 INSERT INTO
     topping(topping_id, bingsoo_id, chef_id, topping_type_id, comment_id, chef_name, topping_title, topping_content, topping_position, topping_created_time, is_hidden)
 VALUES 
-    (1, 1, 3, 1, null, '익명1', '제목1', '본문1', 1, now(), false),
-    (2, 1, 4, 1, null, '익명2', '제목2', '본문2', 2, now(), false),
+    (1, 1, 3, 1, null, '익명1', '제목1', '본문1', 1, now(), true),
+    (2, 1, 4, 1, null, '익명2', '제목2', '본문2', 2, now(), true),
     (3, 1, 5, 2, null, '익명3', '제목3', '본문3', 3, now(), false),
     (4, 1, 6, 3, null, '익명4', '제목4', '본문4', 4, now(), false),
     (5, 1, 7, 4, null, '익명5', '제목5', '본문5', 5, now(), false),
