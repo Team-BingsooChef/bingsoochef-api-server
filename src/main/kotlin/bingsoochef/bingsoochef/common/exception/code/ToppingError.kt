@@ -15,7 +15,7 @@ enum class ToppingError(
 
     NOT_FOUND(HttpStatus.NOT_FOUND, "T100", "존재하지 않는 자원입니다."),
     TOPPING_NOT_FOUND(HttpStatus.NOT_FOUND, "T101", "존재하지 않는 토핑입니다."),
-    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "T102", "존재하지 않는 토핑입니다."),
+    COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "T102", "존재하지 않는 코멘트입니다."),
     QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "T103", "존재하지 않는 퀴즈입니다."),
     TOPPING_TYPE_NOT_FOUND(HttpStatus.NOT_FOUND, "T104", "존재하지 않는 토핑 유형입니다."),
 
