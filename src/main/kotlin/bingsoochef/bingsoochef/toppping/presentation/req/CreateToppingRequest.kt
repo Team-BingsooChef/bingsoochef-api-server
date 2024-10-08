@@ -1,6 +1,6 @@
 package bingsoochef.bingsoochef.toppping.presentation.req
 
-import bingsoochef.bingsoochef.toppping.application.CreateToppingCommand
+import bingsoochef.bingsoochef.toppping.application.command.CreateToppingCommand
 import bingsoochef.bingsoochef.toppping.domain.QuizType
 
 data class CreateToppingRequest (
