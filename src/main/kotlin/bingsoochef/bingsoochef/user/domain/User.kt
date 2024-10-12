@@ -1,6 +1,8 @@
 package bingsoochef.bingsoochef.user.domain
 
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
+import bingsoochef.bingsoochef.common.exception.BingsooException
+import bingsoochef.bingsoochef.common.exception.code.BingsooError
 import jakarta.persistence.*
 
 @Table(name = "users")
@@ -34,4 +36,11 @@ class User(
         null,
         userType
     )
+
+    fun connectBingsoo(bingsoo: Bingsoo) {
+        if (this.bingsoo != null)
+            throw BingsooException(BingsooError.DUPLICATE)
+
+        this.bingsoo = bingsoo
+    }
 }

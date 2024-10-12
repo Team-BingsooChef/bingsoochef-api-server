@@ -22,10 +22,10 @@ class BingsooService(
 
     fun createBingsoo(command: CreateBingsooCommand): BingsooInfo {
         var user: User = userRepository.findById(command.userId)
-            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+                .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
 
         val bingsoo: Bingsoo = bingsooRepository.save(Bingsoo(taste = command.taste))
-        // TODO("User에 Bingsoo 매핑")
+        user.connectBingsoo(bingsoo)
 
         return BingsooInfo.from(bingsoo)
     }
