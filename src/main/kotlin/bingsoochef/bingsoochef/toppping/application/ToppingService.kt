@@ -5,13 +5,12 @@ import bingsoochef.bingsoochef.common.exception.BingsooException
 import bingsoochef.bingsoochef.common.exception.code.BingsooError
 import bingsoochef.bingsoochef.common.exception.code.ToppingError
 import bingsoochef.bingsoochef.common.exception.code.UserError
-import bingsoochef.bingsoochef.toppping.application.dto.CommentInfo
-import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
-import bingsoochef.bingsoochef.toppping.application.dto.ToppingPageInfo
-import bingsoochef.bingsoochef.toppping.domain.Question
-import bingsoochef.bingsoochef.toppping.domain.Quiz
-import bingsoochef.bingsoochef.toppping.domain.QuizType
-import bingsoochef.bingsoochef.toppping.domain.Topping
+import bingsoochef.bingsoochef.toppping.application.command.CreateToppingCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingPageCommand
+import bingsoochef.bingsoochef.toppping.application.command.RegisterCommentCommand
+import bingsoochef.bingsoochef.toppping.application.dto.*
+import bingsoochef.bingsoochef.toppping.domain.*
 import bingsoochef.bingsoochef.toppping.persistence.*
 import bingsoochef.bingsoochef.user.persistence.UserRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -133,11 +132,65 @@ class ToppingService(
         if (topping.comment == null)
             return Pair(ToppingInfo.from(topping), null)
 
-        val comment = commentRepository.findById(topping.comment!!.id!!)
-            .orElseThrow{ BingsooException(ToppingError.COMMENT_NOT_FOUND) }
+        return Pair(ToppingInfo.from(topping), CommentInfo.from(topping.comment!!))
+    }
+
+    @Transactional(readOnly = true)
+    fun getQuiz(userId: Long, toppingId: Long): Pair<QuizInfo, List<QuestionInfo>> {
+
+        val user = userRepository.findById(userId)
+            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+
+        val quiz = quizRepository.findByToppingId(toppingId)
+            .orElseThrow{ BingsooException(ToppingError.QUIZ_NOT_FOUND) }
+
+        quiz.isReadableBy(user)
+
+        val questions = questionRepository.findAllByQuiz(quiz)
+
+        return Pair(QuizInfo.from(quiz), questions.map { QuestionInfo.from(it) })
+    }
+
+    fun tryQuiz(userId: Long, quizId: Long, questionId: Long): TryResultInfo {
+
+        val user = userRepository.findById(userId)
+            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+        val quiz = quizRepository.findById(quizId)
+            .orElseThrow{ BingsooException(ToppingError.QUIZ_NOT_FOUND) }
+
+        quiz.isTryableBy(user)
+
+        val question = questionRepository.findById(questionId)
+            .orElseThrow{ BingsooException(ToppingError.QUESTION_NOT_FOUND) }
+
+        val result: Boolean = question.isAnswer
+        when (result) {
+            true -> quiz.topping.defrost()
+            false -> quiz.getQuizWrong()
+        }
+
+        return TryResultInfo.of(result, quiz)
+    }
+
+    fun registerComment(command: RegisterCommentCommand): Pair<ToppingInfo, CommentInfo> {
+
+        val user = userRepository.findById(command.userId)
+            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+        val topping = toppingRepository.findById(command.toppingId)
+            .orElseThrow{ BingsooException(ToppingError.TOPPING_NOT_FOUND) }
+
+        topping.isReadableBy(user)
+        if (topping.comment != null)
+            throw BingsooException(ToppingError.COMMENT_DUPLICATE)
+
+        val comment = Comment(
+            content = command.commentContent,
+            createdTime = LocalDateTime.now()
+        )
+        topping.comment = comment
+
+        commentRepository.save(comment)
 
         return Pair(ToppingInfo.from(topping), CommentInfo.from(comment))
     }
-
-
 }

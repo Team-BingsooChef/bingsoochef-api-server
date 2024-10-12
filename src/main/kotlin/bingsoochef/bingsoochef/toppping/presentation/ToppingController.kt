@@ -1,7 +1,7 @@
 package bingsoochef.bingsoochef.toppping.presentation
 
-import bingsoochef.bingsoochef.toppping.application.GetToppingCommand
-import bingsoochef.bingsoochef.toppping.application.GetToppingPageCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingCommand
+import bingsoochef.bingsoochef.toppping.application.command.GetToppingPageCommand
 import bingsoochef.bingsoochef.toppping.application.dto.ToppingInfo
 import bingsoochef.bingsoochef.toppping.application.ToppingService
 import bingsoochef.bingsoochef.toppping.presentation.req.CreateToppingRequest
@@ -37,7 +37,6 @@ class ToppingController(
         @RequestParam(value = "b") bingsooId: Long,
         @PageableDefault(page = 0, size = 8) pageable: Pageable ): ResponseEntity<ToppingPageResponse> {
 
-        //TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
         val getToppingPageCommand = GetToppingPageCommand(bingsooId, pageable)
 
         val toppingPageInfo = toppingService.getToppingPage(getToppingPageCommand)
@@ -63,16 +62,29 @@ class ToppingController(
     @GetMapping("/{topping-id}/quiz")
     override fun getQuiz(@PathVariable(value = "topping-id") toppingId: Long,
                          @RequestParam(value = "user-id") userId: Long): ResponseEntity<QuizResponse> {
-        TODO()
+        val (quizInfo, questionsInfo) = toppingService.getQuiz(userId, toppingId)
+        val response = QuizResponse.of(quizInfo, questionsInfo)
+
+        return ResponseEntity.status(HttpStatus.OK).body(response)
     }
 
     @PostMapping("/quiz")
     override fun tryQuiz(@RequestBody request: TryQuizRequest): ResponseEntity<TryResultResponse> {
-        TODO()
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val info = toppingService.tryQuiz(request.userId, request.quizId, request.questionId)
+        val response = TryResultResponse.from(info)
+
+        return ResponseEntity.status(HttpStatus.OK).body(response)
     }
 
     @PostMapping("/comments")
     override fun registerComment(@RequestBody request: RegisterCommentRequest): ResponseEntity<ToppingResponse> {
-        TODO()
+        // TODO("사용자 ID를 Access token에서 가져오는 것으로 수정")
+        val command = request.toCommand(request.userId)
+
+        val (toppinfInfo, commentInfo) = toppingService.registerComment(command)
+        val response = ToppingResponse.of(toppinfInfo, commentInfo)
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }
 }

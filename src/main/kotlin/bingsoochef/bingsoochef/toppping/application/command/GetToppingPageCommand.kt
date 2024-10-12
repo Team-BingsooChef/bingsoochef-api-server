@@ -1,4 +1,4 @@
-package bingsoochef.bingsoochef.toppping.application
+package bingsoochef.bingsoochef.toppping.application.command
 
 import org.springframework.data.domain.Pageable
 
