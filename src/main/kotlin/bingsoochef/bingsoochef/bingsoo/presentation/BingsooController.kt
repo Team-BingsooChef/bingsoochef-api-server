@@ -5,7 +5,6 @@ import bingsoochef.bingsoochef.bingsoo.application.command.CreateBingsooCommand
 import bingsoochef.bingsoochef.bingsoo.application.command.UpdateBingsooCommand
 import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
-import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDto
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooResponse
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.http.HttpStatus
@@ -27,18 +26,16 @@ class BingsooController(
 
         val createCommand = CreateBingsooCommand(userId, request.taste)
 
-        val bingsoo = bingsooService.createBingsoo(createCommand)
-        val bingsooDto = BingsooDto.from(bingsoo)
-        val bingsooResponse = BingsooResponse.of(bingsooDto)
+        val info = bingsooService.createBingsoo(createCommand)
+        val bingsooResponse = BingsooResponse.from(info)
 
         return ResponseEntity.status(HttpStatus.CREATED).body(bingsooResponse)
     }
 
     @GetMapping("/{bingsoo-id}")
     override fun getBingsoo(@PathVariable(value = "bingsoo-id") bingsooId: Long): ResponseEntity<BingsooResponse> {
-        val bingsoo = bingsooService.getBingsoo(bingsooId)
-        val bingsooDto = BingsooDto.from(bingsoo)
-        val bingsooResponse = BingsooResponse.of(bingsooDto)
+        val info = bingsooService.getBingsoo(bingsooId)
+        val bingsooResponse = BingsooResponse.from(info)
 
         return ResponseEntity.status(HttpStatus.OK).body(bingsooResponse)
     }
@@ -50,9 +47,8 @@ class BingsooController(
 
         val updateCommand = UpdateBingsooCommand(userId, request.taste)
 
-        val bingsoo = bingsooService.updateBingsoo(updateCommand)
-        val bingsooDto = BingsooDto.from(bingsoo)
-        val bingsooResponse = BingsooResponse.of(bingsooDto)
+        val info = bingsooService.updateBingsoo(updateCommand)
+        val bingsooResponse = BingsooResponse.from(info)
 
         return ResponseEntity.status(HttpStatus.OK).body(bingsooResponse)
     }
