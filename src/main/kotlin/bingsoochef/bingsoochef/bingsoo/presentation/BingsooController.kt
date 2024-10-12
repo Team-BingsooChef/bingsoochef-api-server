@@ -1,8 +1,8 @@
 package bingsoochef.bingsoochef.bingsoo.presentation
 
 import bingsoochef.bingsoochef.bingsoo.application.BingsooService
-import bingsoochef.bingsoochef.bingsoo.application.CreateBingsooCommand
-import bingsoochef.bingsoochef.bingsoo.application.UpdateBingsooCommand
+import bingsoochef.bingsoochef.bingsoo.application.command.CreateBingsooCommand
+import bingsoochef.bingsoochef.bingsoo.application.command.UpdateBingsooCommand
 import bingsoochef.bingsoochef.bingsoo.presentation.req.CreateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.req.UpdateBingsooRequest
 import bingsoochef.bingsoochef.bingsoo.presentation.res.BingsooDto

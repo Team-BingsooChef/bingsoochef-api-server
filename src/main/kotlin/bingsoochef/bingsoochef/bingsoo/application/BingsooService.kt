@@ -1,5 +1,7 @@
 package bingsoochef.bingsoochef.bingsoo.application
 
+import bingsoochef.bingsoochef.bingsoo.application.command.CreateBingsooCommand
+import bingsoochef.bingsoochef.bingsoo.application.command.UpdateBingsooCommand
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
 import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.common.exception.BingsooException
