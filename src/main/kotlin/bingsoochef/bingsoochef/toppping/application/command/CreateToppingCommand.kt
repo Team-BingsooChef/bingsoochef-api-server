@@ -24,17 +24,17 @@ data class CreateToppingCommand(
     val questions : List<Pair<String, Boolean>>?,
 
     val isQuiz : Boolean =
-        if (quizType != null && quizTitle != null) {
-            if (quizType == QuizType.OX)
-                validateOX(questions)
-            if (quizType == QuizType.MULTIPLE_CHOICE)
-                validateMultipleChoice(questions)
-            true
+        when {
+            quizType == null && quizTitle == null -> false
+            quizType != null && quizTitle != null -> {
+                when (quizType) {
+                    QuizType.OX -> validateOX(questions)
+                    QuizType.MULTIPLE_CHOICE -> validateMultipleChoice(questions)
+                }
+                true
+            }
+            else -> throw BingsooException(ToppingError.QUIZ_ILLEGAL_REQUEST, "퀴즈 타입과 제목은 모두 있거나 모두 없어야 합니다.")
         }
-        else if (quizType == null && quizTitle == null)
-            false
-        else
-            throw BingsooException(ToppingError.QUIZ_ILLEGAL_REQUEST, "퀴즈 타입과 제목은 모두 있거나 모두 없어야 합니다.")
 ) {
     init {
         if (chefName.length > chefNameLength)
