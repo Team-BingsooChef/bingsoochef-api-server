@@ -1,5 +1,8 @@
 package bingsoochef.bingsoochef.bingsoo.application
 
+import bingsoochef.bingsoochef.bingsoo.application.command.CreateBingsooCommand
+import bingsoochef.bingsoochef.bingsoo.application.command.UpdateBingsooCommand
+import bingsoochef.bingsoochef.bingsoo.application.dto.BingsooInfo
 import bingsoochef.bingsoochef.bingsoo.domain.Bingsoo
 import bingsoochef.bingsoochef.bingsoo.persistence.BingsooRepository
 import bingsoochef.bingsoochef.common.exception.BingsooException
@@ -17,29 +20,31 @@ class BingsooService(
     var bingsooRepository: BingsooRepository
 ) {
 
-    fun createBingsoo(command: CreateBingsooCommand): Bingsoo {
+    fun createBingsoo(command: CreateBingsooCommand): BingsooInfo {
         var user: User = userRepository.findById(command.userId)
-            .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
+                .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
 
         val bingsoo: Bingsoo = bingsooRepository.save(Bingsoo(taste = command.taste))
-        // TODO("User에 Bingsoo 매핑")
+        user.connectBingsoo(bingsoo)
 
-        return bingsoo
+        return BingsooInfo.from(bingsoo)
     }
 
-    fun updateBingsoo(command: UpdateBingsooCommand): Bingsoo {
+    fun updateBingsoo(command: UpdateBingsooCommand): BingsooInfo {
         val bingsoo = userRepository.findById(command.userId)
             .orElseThrow{ BingsooException(UserError.USER_NOT_FOUND) }
             .bingsoo ?: throw BingsooException(BingsooError.NOT_FOUND, "사용자에게 빙수가 없습니다.")
 
         bingsoo.updateTaste(taste = command.taste)
 
-        return bingsoo
+        return BingsooInfo.from(bingsoo)
     }
 
     @Transactional(readOnly = true)
-    fun getBingsoo(bingsooId: Long): Bingsoo {
-        return bingsooRepository.findById(bingsooId)
+    fun getBingsoo(bingsooId: Long): BingsooInfo {
+        val bingsoo = bingsooRepository.findById(bingsooId)
             .orElseThrow{ BingsooException(BingsooError.NOT_FOUND) }
+
+        return BingsooInfo.from(bingsoo)
     }
 }
